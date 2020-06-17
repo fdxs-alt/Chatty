@@ -43,8 +43,7 @@ UserSchema.methods.validatePassword = async function(password) {
 };
 UserSchema.methods.createJWT = function() {
     return jwt.sign({
-        email: this.email,
-        id: this._id,
+        sub: this._id
     }, process.env.secret, {expiresIn: 3600})
 }
 
@@ -52,7 +51,7 @@ UserSchema.methods.toAuthJwt = function() {
   return {
     _id: this._id,
     email: this.email,
-    token: this.createJWT(),
+    token: "Bearer " + this.createJWT(),
   };
 }
 
