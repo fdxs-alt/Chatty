@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const emailValidator = require("email-validator");
-const passport = require("passport");
+
 require('../config/passport')
 router.post("/register", (req, res) => {
   const { email, nick, password } = req.body;
