@@ -1,12 +1,16 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegistePage";
 import Dashboard from "./components/Dashboard";
-const App = () => {
+import {connect} from 'react-redux'
+import {getUser} from './redux/actions/AuthActions'
+const App = ({auth, getUser}) => {
 
-  if(localStorage.getItem("Authorization"))
-    console.log(localStorage.getItem("Authorization"))
+  useEffect(() => {
+    getUser();
+  }, [])
+  
   return (
     <Router>
       <Switch>
@@ -17,5 +21,7 @@ const App = () => {
     </Router>
   );
 };
-
-export default App;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps, {getUser})(App);
