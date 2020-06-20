@@ -51,6 +51,8 @@ UserSchema.methods.toAuthJwt = function() {
   return {
     _id: this._id,
     email: this.email,
+    nick: this.nick,
+    date: this.date,
     token: "Bearer " + this.createJWT(),
   };
 }
