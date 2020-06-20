@@ -1,12 +1,21 @@
-import React from 'react';
-import './App.css';
-import Chat from './components/Chat'
-function App() {
+import React from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegistePage";
+import Dashboard from "./components/Dashboard";
+const App = () => {
+
+  if(localStorage.getItem("Authorization"))
+    console.log(localStorage.getItem("Authorization"))
   return (
-    <div className="App">
-      <Chat/>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login" component={LoginPage}/>
+        <Route path="/register" component={RegisterPage} />
+        <Route path="/dashboard" component={Dashboard} />
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
