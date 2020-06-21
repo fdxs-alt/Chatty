@@ -45,6 +45,7 @@ export const registerUser = ({ email, nick, password }) => dispatch => {
 };
 
 export const getUser = () => (dispatch, getState) => {
+  
   dispatch({ type: USER_LOADING });
   const token = getState().auth.token;
   const config = {
@@ -62,6 +63,6 @@ export const getUser = () => (dispatch, getState) => {
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: AUTH_ERROR });
+      dispatch({ type: REGISTER_FAIL });
     });
 };
