@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegistePage";
 import Dashboard from "./components/Dashboard";
+import ChatRoom from './components/ChatRoom'
 import {connect} from 'react-redux'
 import {getUser} from './redux/actions/AuthActions'
 const App = ({auth, getUser}) => {
@@ -17,6 +18,7 @@ const App = ({auth, getUser}) => {
         <Route path="/login" component={LoginPage}/>
         <Route path="/register" component={RegisterPage} />
         <Route path="/dashboard" component={Dashboard} />
+        <Route path="/chat/:room/:user" component={ChatRoom} />
       </Switch>
     </Router>
   );

@@ -27,8 +27,30 @@ router.get(
       const user = await User.findById(decoded).select("-password");
       res.status(200).json(user);
     } catch (err) {
-      res.status(404).json({error: "there was an error"})
+      res.status(401).json({ error: "there was an error" });
     }
+  }
+);
+router.post(
+  "/addRoom",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { chatroom, user } = req.body;
+    if (!chatroom)
+      return res
+        .status(400)
+        .json({ error: "You need to specify the name of the chat" });
+    ChatRoom.findOne({ name: chatroom }).then(room => {
+      if (room) res.status(400).json({ error: "This name is already taken" });
+      const newRoom = new ChatRoom({
+        name: chatroom,
+        users: user
+      });
+      newRoom
+        .save()
+        .then(result => res.status(200).json(result))
+        .catch(err => console.log(err));
+    });
   }
 );
 module.exports = router;

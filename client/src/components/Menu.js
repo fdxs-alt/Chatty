@@ -1,35 +1,13 @@
 import React from "react";
 import styles from "../styles/Menu.module.css";
-import { connect } from "react-redux";
-import { css } from "@emotion/core";
-import RotateLoader	 from "react-spinners/RotateLoader";
 import { Link } from "react-router-dom";
 
-const override = css`
-
-  display: block;
-  margin: 0 auto;
-  background-color: red;
-  border: red;
-`;
-
-const Menu = ({ auth }) => {
-  if (auth.isLoading || auth.isLoading == null)
-    return (
-      <div className={styles.loading}>
-      <RotateLoader	
-        css={override}
-        size={200}
-        color={"#123abc"}
-        loading={auth.isLoading}
-      />
-      </div>
-    );
-  else
+const Menu = ({user}) => {
+  
     return (
       <nav className={styles.navbar}>
         <div className={styles.hero}>
-          <h1 className={styles.nick}>{auth.user.nick}</h1>
+          <h1 className={styles.nick}>{user.nick}</h1>
         </div>
         <ul className={styles.menu}>
           <li>
@@ -48,7 +26,5 @@ const Menu = ({ auth }) => {
       </nav>
     );
 };
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-export default connect(mapStateToProps, null)(Menu);
+
+export default Menu;

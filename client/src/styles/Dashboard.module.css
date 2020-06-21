@@ -10,5 +10,14 @@ body {
 }
 .container {
     width: 100%;
-    
+    display: flex;
+}
+.load {
+    margin: auto;
+    box-sizing: border-box;
+    width: 70%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
