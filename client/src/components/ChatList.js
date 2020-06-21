@@ -29,12 +29,12 @@ const ChatList = ({ auth }) => {
   else
     return (
       <div className={styles.chatlist}>
-        <h1 className={styles.chat}>Chat</h1>
-        <div className={styles.chats}>
+        <h1>Chatrooms</h1>
+        <ul className={styles.chats}>
           {chatrooms.map(chatroom => (
-            <Link to={`/chat/${chatroom.name}/${auth.user.nick}`} key={chatroom._id}>{chatroom.name}</Link>
+            <li><Link to={`/chat?room=${chatroom.name}&name=${auth.user.nick}`} className={styles.links} key={chatroom._id}>{chatroom.name}</Link></li>
           ))}
-        </div>
+        </ul>
       </div>
     );
 };

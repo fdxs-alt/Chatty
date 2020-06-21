@@ -63,6 +63,10 @@ export const getUser = () => (dispatch, getState) => {
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: REGISTER_FAIL });
+      dispatch({ type: AUTH_ERROR });
     });
 };
+
+export const logout = () => dispatch => {
+  dispatch({type: LOGOUT_SUCCESS})
+}

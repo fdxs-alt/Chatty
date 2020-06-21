@@ -1,8 +1,9 @@
 import React from "react";
 import styles from "../styles/Menu.module.css";
 import { Link } from "react-router-dom";
-
-const Menu = ({user}) => {
+import {connect} from 'react-redux'
+import {logout} from '../redux/actions/AuthActions'
+const Menu = ({user, logout}) => {
   
     return (
       <nav className={styles.navbar}>
@@ -21,10 +22,10 @@ const Menu = ({user}) => {
             </Link>
           </li>
         </ul>
-        <button className={styles.logout}>Log out</button>
+        <button className={styles.logout} onClick={() => logout()}>Log out</button>
         <h1 className={styles.logo}>Chatty</h1>
       </nav>
     );
 };
 
-export default Menu;
+export default connect(null, {logout})(Menu);

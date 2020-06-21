@@ -23,28 +23,21 @@ app.use("/auth", require("./routes/AuthRoutes"));
 app.use("/user", require("./routes/UserRoutes"));
 io.sockets
   .on(
-    "connection",
+    "connect",
     socketioJWT.authorize({
-      secret: process.env.secret,
-      timeout: 15000
+      secret: process.env.secret
     })
   )
   .on("authenticated", async socket => {
-    let user;
-    try {
-      user = await User.findById(socket.decoded_token.sub).select("-password");
-    } catch (error) {
-      console.log(error)
-    }
-    
-    socket.on("join", ({ user, room }, callback) => {
-      socket.emit('message', {user: 'admin', content: `${user} welcome to the ${room}`})
-      callback()
+    socket.on("join", ({ name, room }, callback) => {
+      
     });
     socket.on("disconnect", ({ user }) => {
-      socket.emit('message', {user: 'admin', content: `${user} has left the room`})
+      socket.emit("message", {
+        user: "admin",
+        content: `${user} has left the room`
+      });
     });
-
   });
 
 // listening

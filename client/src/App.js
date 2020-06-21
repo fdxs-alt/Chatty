@@ -10,7 +10,7 @@ const App = ({auth, getUser}) => {
 
   useEffect(() => {
     getUser();
-  }, [])
+  }, [getUser])
   
   return (
     <Router>
@@ -18,7 +18,7 @@ const App = ({auth, getUser}) => {
         <Route path="/login" component={LoginPage}/>
         <Route path="/register" component={RegisterPage} />
         <Route path="/dashboard" component={Dashboard} />
-        <Route path="/chat/:room/:user" component={ChatRoom} />
+        <Route path="/chat" component={ChatRoom} />
       </Switch>
     </Router>
   );

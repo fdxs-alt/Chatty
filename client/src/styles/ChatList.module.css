@@ -1,3 +1,52 @@
+* {
+    --background-color-main: #0047AD;
+    --image-font-color: #F3542D;
+    --button-color: #F14E75;
+    --input-style: rgb(46, 101, 173);
+}
 .chatlist {
     width: 70%;
 }
+.chatlist h1{
+    width: 100%;
+    font-size: 3rem;
+    padding: 2rem;
+    color: var(--image-font-color);
+    position: relative;
+}
+.chatlist h1::after{
+    content: "";
+    top:0;
+    bottom: 0.4rem;
+    left: 0;
+    right: 0;
+    margin: auto;
+    border-bottom: 2px solid var(--input-style);
+    opacity: 0.4;
+    position: absolute;
+}
+.chats {
+    padding: 2rem 4rem;
+    width: 90%;
+    margin: 2.5rem auto;
+    list-style-type: none;
+}
+.chats li {
+    width: 100%;
+    position: relative;
+}
+.chats li::after{
+    content: "";
+    top: 4rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 2px solid var(--input-style);
+    opacity: 0.4;
+    position: absolute;
+}
+.links {
+    text-decoration: none;  
+    font-size: 1.8rem;    
+}
+
