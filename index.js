@@ -9,7 +9,7 @@ const passport = require("passport");
 const User = require("./models/User");
 const ChatRoom = require("./models/ChatRoom");
 const jwt = require("jsonwebtoken");
-
+const join = require("./socket/join");
 dotenv.config({ path: "./.env" });
 require("./config/passport")(passport);
 
@@ -30,12 +30,14 @@ io.sockets
   )
   .on("authenticated", async socket => {
     socket.on("join", ({ name, room }, callback) => {
-      
+      join(socket, name, room, callback);
+      callback();
     });
-    socket.on("disconnect", ({ user }) => {
+
+    socket.on("disconnect", ({ name }) => {
       socket.emit("message", {
         user: "admin",
-        content: `${user} has left the room`
+        content: `${name} has left the room`
       });
     });
   });
