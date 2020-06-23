@@ -10,6 +10,7 @@ const User = require("./models/User");
 const ChatRoom = require("./models/ChatRoom");
 const jwt = require("jsonwebtoken");
 const join = require("./socket/join");
+const sendMessage = require("./socket/sendMessage");
 dotenv.config({ path: "./.env" });
 require("./config/passport")(passport);
 
@@ -21,26 +22,23 @@ app.use(passport.initialize());
 // auth routes
 app.use("/auth", require("./routes/AuthRoutes"));
 app.use("/user", require("./routes/UserRoutes"));
-io.sockets
-  .on(
-    "connect",
-    socketioJWT.authorize({
-      secret: process.env.secret
-    })
-  )
-  .on("authenticated", async socket => {
-    socket.on("join", ({ name, room }, callback) => {
-      join(socket, name, room, callback);
-      callback();
-    });
 
-    socket.on("disconnect", ({ name }) => {
-      socket.emit("message", {
-        user: "admin",
-        content: `${name} has left the room`
-      });
+io.on("connection", socket => {
+  socket.on("join", ({ name, room }, callback) => {
+    join(socket, name, room, callback);
+    callback();
+  });
+  socket.on("sendMessage", (message, name, room, callback) => {
+    sendMessage(message, io, callback, name, room);
+    callback();
+  });
+  socket.on("disconnect", ({ name }) => {
+    socket.emit("message", {
+      user: "admin",
+      content: `${name} has left the room`
     });
   });
+});
 
 // listening
 const PORT = process.env.PORT || 5000;

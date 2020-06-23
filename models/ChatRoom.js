@@ -18,7 +18,7 @@ const ChatroomSchema = new mongoose.Schema({
         type: String
       },
       date: {
-        type: Date,
+        type: String,
         default: moment().format("MMMM Do YYYY, h:mm:ss a")
       }
     }

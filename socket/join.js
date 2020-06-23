@@ -11,12 +11,15 @@ module.exports = function(socket, name, room, callback) {
             }
           }
         ).catch(error => callback(error));
-
-    
       socket.emit("message", {
         user: "admin",
-        text: `${user} has joined`
+        text: `${name} welcome to the ${room}`
+      }); 
+      socket.broadcast.emit("message", {
+        user: "admin",
+        text: `${name} has joined`
       });
+
       socket.join(room);
     })
     .catch(error => callback(error));
