@@ -6,7 +6,7 @@ const ChatroomSchema = new mongoose.Schema({
     required: true
   },
   users: {
-    type: Array,
+    type: [String],
     required: true
   },
   messages: [
@@ -18,7 +18,7 @@ const ChatroomSchema = new mongoose.Schema({
         type: String
       },
       date: {
-        type: Date,
+        type: String,
         default: moment().format("MMMM Do YYYY, h:mm:ss a")
       }
     }

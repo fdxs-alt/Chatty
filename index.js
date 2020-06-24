@@ -9,7 +9,8 @@ const passport = require("passport");
 const User = require("./models/User");
 const ChatRoom = require("./models/ChatRoom");
 const jwt = require("jsonwebtoken");
-
+const join = require("./socket/join");
+const sendMessage = require("./socket/sendMessage");
 dotenv.config({ path: "./.env" });
 require("./config/passport")(passport);
 
@@ -21,31 +22,23 @@ app.use(passport.initialize());
 // auth routes
 app.use("/auth", require("./routes/AuthRoutes"));
 app.use("/user", require("./routes/UserRoutes"));
-io.sockets
-  .on(
-    "connection",
-    socketioJWT.authorize({
-      secret: process.env.secret,
-      timeout: 15000
-    })
-  )
-  .on("authenticated", async socket => {
-    let user;
-    try {
-      user = await User.findById(socket.decoded_token.sub).select("-password");
-    } catch (error) {
-      console.log(error)
-    }
-    
-    socket.on("join", ({ user, room }, callback) => {
-      socket.emit('message', {user: 'admin', content: `${user} welcome to the ${room}`})
-      callback()
-    });
-    socket.on("disconnect", ({ user }) => {
-      socket.emit('message', {user: 'admin', content: `${user} has left the room`})
-    });
 
+io.on("connection", socket => {
+  socket.on("join", ({ name, room }, callback) => {
+    join(socket, name, room, callback);
+    callback();
   });
+  socket.on("sendMessage", (message, name, room, callback) => {
+    sendMessage(message, io, callback, name, room);
+    callback();
+  });
+  socket.on("disconnect", ({ name }) => {
+    socket.emit("message", {
+      user: "admin",
+      content: `${name} has left the room`
+    });
+  });
+});
 
 // listening
 const PORT = process.env.PORT || 5000;

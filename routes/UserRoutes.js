@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const ChatRoom = require("../models/ChatRoom");
+const User = require("../models/User");
+const jwt = require("jsonwebtoken");
 router.get(
   "/chatrooms",
   passport.authenticate("jwt", { session: false }),
@@ -13,12 +15,42 @@ router.get(
       .catch(err => console.log(err));
   }
 );
+router.get(
+  "/getUser",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { authorization } = req.headers;
+    const token = authorization.split(" ")[1];
+    try {
+      const decoded = jwt.verify(token, process.env.secret).sub;
+
+      const user = await User.findById(decoded).select("-password");
+      res.status(200).json(user);
+    } catch (err) {
+      res.status(401).json({ error: "there was an error" });
+    }
+  }
+);
 router.post(
-  "/createroom",
+  "/addRoom",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-      
-
+    const { chatroom, user } = req.body;
+    if (!chatroom)
+      return res
+        .status(400)
+        .json({ error: "You need to specify the name of the chat" });
+    ChatRoom.findOne({ name: chatroom }).then(room => {
+      if (room) res.status(400).json({ error: "This name is already taken" });
+      const newRoom = new ChatRoom({
+        name: chatroom,
+        users: user
+      });
+      newRoom
+        .save()
+        .then(result => res.status(200).json(result))
+        .catch(err => console.log(err));
+    });
   }
 );
 module.exports = router;

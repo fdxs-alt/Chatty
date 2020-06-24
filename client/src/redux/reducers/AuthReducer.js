@@ -12,7 +12,7 @@ import {
   const initalState = {
     token: localStorage.getItem("Authorization"),
     isAuthenticated: null,
-    isLoading: false,
+    isLoading: null,
     user: null
   };
   
@@ -26,6 +26,7 @@ import {
         case USER_LOADED: {
           return{
             ...state,
+            isAuthenticated: true,
             isLoading:false,
             user: action.payload
           }
