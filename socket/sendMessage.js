@@ -1,4 +1,5 @@
-const ChatRoom = require('../models/ChatRoom')
+const ChatRoom = require("../models/ChatRoom");
+const moment = require("moment");
 module.exports = function(message, io, callback, name, room) {
   ChatRoom.findOne({ name: room }).then(chatroom => {
     ChatRoom.findByIdAndUpdate(
@@ -14,6 +15,10 @@ module.exports = function(message, io, callback, name, room) {
         }
       }
     ).catch(error => callback(error));
-    io.to(room).emit("message", { user: name, text: message });
+    io.to(room).emit("message", {
+      user: name,
+      text: message,
+      sendAt: moment().format("MMMM Do YYYY, h:mm:ss a")
+    });
   });
 };
