@@ -3,18 +3,18 @@ import { connect } from "react-redux";
 import styles from "../styles/Messages.module.css";
 const Message = ({ message, auth }) => {
   let isSender = false;
-  if (message.user === auth.user.nick) isSender = true;
+  if (message.issuedBy === auth.user.nick) isSender = true;
   return (
     <div className={styles.messageWrapper}>
       {isSender ? (
         <div className={styles.ownMessage}>
-          <h5 className={styles.nickname}>{message.user}:</h5>
-          <p>{message.text}</p>
+          <h5 className={styles.nickname}>{message.issuedBy}:</h5>
+          <p>{message.content}</p>
         </div>
       ) : (
         <div className={styles.message}>
-          <h5 className={styles.nickname}>{message.user}:</h5>
-          <p>{message.text}</p>
+          <h5 className={styles.nickname}>{message.issuedBy}:</h5>
+          <p>{message.content}</p>
         </div>
       )}
       

@@ -13,14 +13,14 @@ module.exports = function(socket, name, room, callback) {
           }
         ).catch(error => callback(error));
       socket.emit("message", {
-        user: "admin",
-        text: `${name} welcome to the ${room}`,
-        sendAt: moment().format("MMMM Do YYYY, h:mm:ss a")
+        issuedBy: "admin",
+        content: `${name} welcome to the ${room}`,
+        date: moment().format("MMMM Do YYYY, h:mm:ss a")
       }); 
       socket.broadcast.emit("message", {
-        user: "admin",
-        text: `${name} has joined`,
-        sendAt: moment().format("MMMM Do YYYY, h:mm:ss a")
+        issuedBy: "admin",
+        content: `${name} has joined`,
+        date: moment().format("MMMM Do YYYY, h:mm:ss a")
       });
 
       socket.join(room);

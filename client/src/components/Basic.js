@@ -1,7 +1,17 @@
 import React from "react";
-import styles from '../styles/Basic.module.css'
+import styles from "../styles/Basic.module.css";
 export const Button = ({ handleClick }) => {
-  return <button className={styles.messageButton}onClick={e => handleClick(e)}>Send</button>;
+  return (
+    <button
+      className={styles.messageButton}
+      onKeyPress={e => {
+        if (e.key === "Enter") handleClick(e);
+      }}
+      onClick={e => handleClick(e)}
+    >
+      Send
+    </button>
+  );
 };
 export const Input = ({ message, setMessage }) => {
   return (

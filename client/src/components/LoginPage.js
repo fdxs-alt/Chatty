@@ -50,7 +50,7 @@ const LoginPage = ({ auth, loginUser }) => {
           <button
             onClick={handleSubmit}
             onKeyPress={e => {
-              if ((e.key = "enter")) handleSubmit();
+              if ((e.key === "Enter")) handleSubmit(e);
             }}
             className={styles.loginButton}
           >

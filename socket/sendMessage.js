@@ -16,9 +16,9 @@ module.exports = function(message, io, callback, name, room) {
       }
     ).catch(error => callback(error));
     io.to(room).emit("message", {
-      user: name,
-      text: message,
-      sendAt: moment().format("MMMM Do YYYY, h:mm:ss a")
+      issuedBy: name,
+      content: message,
+      date: moment().format("MMMM Do YYYY, h:mm:ss a")
     });
   });
 };
