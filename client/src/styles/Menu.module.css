@@ -55,5 +55,7 @@
   color: white;
   border-radius: 1.5rem;
   padding: 1.2rem 2rem;
-  color: black;
+  color: red;
+  cursor: pointer;
+  font-size: 1.1rem;
 }

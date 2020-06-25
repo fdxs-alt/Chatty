@@ -6,13 +6,16 @@ import Spinner from "./Spinner";
 import styles from "../styles/Dashboard.module.css";
 import Messages from "./Messages";
 import { Button, Input } from "./Basic";
-const queryString = require("query-string");
+import Axios from "axios";
+import { setConfig } from "../util/setConfig";
+import queryString from "query-string"
 
 const ChatRoom = ({ auth }) => {
   const [roomName, setRoom] = useState("");
   const [userName, setName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [loading, setLoading] = useState(false);
   const socket = io.connect("http://localhost:5000", {
     query: `token=${auth.token.split(" ")[1]}`
   });
@@ -20,7 +23,13 @@ const ChatRoom = ({ auth }) => {
     const { room, name } = queryString.parse(window.location.search);
     setRoom(room);
     setName(name);
-
+    setLoading(true);
+    Axios.get(`/user/getMessages/${room}`, setConfig(auth.token))
+      .then(res => {
+        setMessages(...messages,res.data)
+        setLoading(false);
+      })
+      .catch(err => console.log(err));
     socket.emit("join", { name, room }, () => {});
     return () => {
       socket.emit("disconnect");
@@ -40,18 +49,18 @@ const ChatRoom = ({ auth }) => {
         setMessage("");
       });
   };
-  if (auth.isLoading || auth.isLoading == null)
-    return <Spinner loading={auth.isLoading} size={300} />;
+  if (loading || auth.isLoading || auth.isLoading==null)
+    return <Spinner loading={loading} size={300} />;
   else
     return (
       <div className={styles.container}>
         <Menu user={auth.user} />
         <div className={styles.content}>
           <Messages messages={messages} />
-          <div className={styles.sendingCompontents}>
-          <Input message={message} setMessage={setMessage} />
-          <Button handleClick={handleClick} />
-          </div>
+          <form className={styles.sendingCompontents}>
+            <Input message={message} setMessage={setMessage} />
+            <Button handleClick={handleClick} />
+          </form>
         </div>
       </div>
     );

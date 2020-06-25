@@ -31,6 +31,18 @@ router.get(
     }
   }
 );
+router.get(
+  "/getMessages/:room",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { room } = req.params;
+    ChatRoom.findOne({ name: room }).then(chatroom => {
+      if (!chatroom)
+        return res.status(404).json({ error: "Can't find such a room" });
+        res.status(200).json(chatroom.messages)
+    });
+  }
+);
 router.post(
   "/addRoom",
   passport.authenticate("jwt", { session: false }),

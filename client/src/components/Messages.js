@@ -8,7 +8,7 @@ const Messages = ({ messages }) => {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    height: "80%"
+    maxHeight: "700px"
   });
   return (
     <ScrollToBottom className={style}>

@@ -1,0 +1,27 @@
+.messageInput {
+  flex: 5;
+  padding: 0.8rem;
+  border: none;
+  border-radius: 1.5rem;
+  border: 1px solid black;
+  font-size: 1.3rem;
+}
+.messageInput:focus {
+    outline: none;
+    border-radius: 1.5rem;
+    border: 2px solid #F14E75;
+}
+.messageButton {
+  flex: 1;
+  margin-left: 0.8rem;
+  border-radius: 1.5rem;
+  background-color: #F14E75;
+  color: white;
+  padding: 1.3rem;
+  border: 1px solid white;
+}
+.messageButton:focus {
+    outline: none;
+    border-radius: 1.5rem;
+    border: 2px solid black;
+}

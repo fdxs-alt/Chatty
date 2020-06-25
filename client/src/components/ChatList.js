@@ -25,7 +25,7 @@ const ChatList = ({ auth }) => {
         <h1>Chatrooms</h1>
         <ul className={styles.chats}>
           {chatrooms.map(chatroom => (
-            <li>
+            <li key={chatroom._id}>
               <Link
                 to={`/chat?room=${chatroom.name}&name=${auth.user.nick}`}
                 className={styles.links}
