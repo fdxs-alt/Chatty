@@ -39,13 +39,15 @@ router.post("/register", (req, res) => {
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
-    return res.status(400).json({ error: "Fill all cridentials" });
+    return res.status(401).json({ error: "Fill all cridentials" });
   User.findOne({ email })
     .then(user => {
       if (!user)
         return res
-          .status(400)
+          .status(401)
           .json({ error: "Password or email doesn't match" });
+      if (!user.confirmed)
+        return res.status(401).json({ error: "Confirm your email first!" });
       user.validatePassword(password).then(isMatch => {
         if (!isMatch)
           return res

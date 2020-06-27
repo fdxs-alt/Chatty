@@ -11,6 +11,7 @@ import { setConfig } from "../util/setConfig";
 import queryString from "query-string"
 
 const ChatRoom = ({ auth }) => {
+  
   const [roomName, setRoom] = useState("");
   const [userName, setName] = useState("");
   const [message, setMessage] = useState("");
@@ -24,18 +25,22 @@ const ChatRoom = ({ auth }) => {
     setRoom(room);
     setName(name);
     setLoading(true);
+    
     Axios.get(`/user/getMessages/${room}`, setConfig(auth.token))
       .then(res => {
-        setMessages(...messages,res.data)
+
+        setMessages(oldMessages=> [...res.data.messages, ...oldMessages])
         setLoading(false);
       })
       .catch(err => console.log(err));
+    
     socket.emit("join", { name, room }, () => {});
     return () => {
       socket.emit("disconnect");
       socket.disconnect();
     };
   }, []);
+  
   useEffect(() => {
     socket.on("message", message => {
       setMessages(oldValue => [...oldValue, message]);
