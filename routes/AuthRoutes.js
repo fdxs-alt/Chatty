@@ -2,7 +2,8 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const emailValidator = require("email-validator");
-
+const { sendEmail } = require("../utils/confirmMail");
+const jwt = require("jsonwebtoken");
 require("../config/passport");
 router.post("/register", (req, res) => {
   const { email, nick, password } = req.body;
@@ -25,17 +26,30 @@ router.post("/register", (req, res) => {
           email,
           password
         });
+
         newUser
           .save()
-          .then(() =>
-            res.json({ message: "User's been registered sucessfully" })
-          )
+          .then(() => {
+            const token = newUser.createJWT();
+            sendEmail(token, newUser.email);
+            res
+              .status(200)
+              .json({ message: "User's been registered sucessfully" });
+          })
           .catch(error => console.log(error));
       })
       .catch(error => console.log(error));
   });
 });
-
+router.post("/confirm/:token", (req, res) => {
+  const { token } = req.params;
+  decoded = jwt.verify(token, process.env.secret)
+  if(!decoded) return res.status(400).json({ error: "Can't verify user" });
+  User.findByIdAndUpdate(decoded.sub, { confirmed: true }, (err, upadated) => {
+    if (err) return res.status(400).json({ error: err });
+    res.status(200).json({ message: "Your account has been verified" });
+  });
+});
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)

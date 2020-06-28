@@ -4,6 +4,7 @@ import LoginPage from "./components/LoginPage";
 import RegisterPage from "./components/RegistePage";
 import Dashboard from "./components/Dashboard";
 import ChatRoom from './components/ChatRoom'
+import Confirm from './components/Confrim'
 import {connect} from 'react-redux'
 import {getUser} from './redux/actions/AuthActions'
 const App = ({auth, getUser}) => {
@@ -19,6 +20,7 @@ const App = ({auth, getUser}) => {
         <Route path="/register" component={RegisterPage} />
         <Route path="/dashboard" component={Dashboard} />
         <Route path="/chat" component={ChatRoom} />
+        <Route path='/confirm' component={Confirm}/>
       </Switch>
     </Router>
   );
