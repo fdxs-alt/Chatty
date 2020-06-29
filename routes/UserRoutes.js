@@ -4,6 +4,7 @@ const passport = require("passport");
 const ChatRoom = require("../models/ChatRoom");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 router.get(
   "/chatrooms",
   passport.authenticate("jwt", { session: false }),
@@ -36,11 +37,13 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const { room } = req.params;
-    ChatRoom.findOne({ name: room }).select('-password').then(chatroom => {
-      if (!chatroom)
-        return res.status(404).json({ error: "Can't find such a room" });
-        res.status(200).json(chatroom)
-    });
+    ChatRoom.findOne({ name: room })
+      .select("-password")
+      .then(chatroom => {
+        if (!chatroom)
+          return res.status(404).json({ error: "Can't find such a room" });
+        res.status(200).json(chatroom);
+      });
   }
 );
 router.post(
@@ -63,6 +66,29 @@ router.post(
         .then(result => res.status(200).json(result))
         .catch(err => console.log(err));
     });
+  }
+);
+router.post(
+  "/changepassword/:userID",
+  passport.authenticate("jwt", { session: false }),
+  async (req, res) => {
+    const { userID } = req.params;
+    const { password, confirmPassword } = req.body;
+    if (password !== confirmPassword)
+      return res
+        .status(400)
+        .json({ error: "Passwords don't match each other" });
+    if (password.length < 6)
+      return res
+        .status(400)
+        .json({ error: "Password must be at least 6 characters" });
+    try {
+      const newPassword = await bcrypt.hash(password, 10);
+      User.findByIdAndUpdate(userID, { password: newPassword });
+      return res.status(200).json({message: "Password changed successfully"})
+    } catch (error) {
+      res.status(400).json(error);
+    }
   }
 );
 module.exports = router;
