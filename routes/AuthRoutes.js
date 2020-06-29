@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require("../models/User");
 const emailValidator = require("email-validator");
 const { resetPassword } = require("../utils/resetPassword");
+const { sendEmail } = require("../utils/confirmMail");
 const jwt = require("jsonwebtoken");
 require("../config/passport");
 router.post("/register", (req, res) => {

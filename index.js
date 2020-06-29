@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
-const moment = require('moment')
+const moment = require("moment");
 const socketioJWT = require("socketio-jwt");
 const dotenv = require("dotenv");
 const connectDB = require("./utils/connectDatabase");
@@ -20,7 +20,12 @@ app.use(passport.initialize());
 // auth routes
 app.use("/auth", require("./routes/AuthRoutes"));
 app.use("/user", require("./routes/UserRoutes"));
-
+io.use(
+  socketioJWT.authorize({
+    secret: process.env.secret,
+    handshake: true
+  })
+);
 io.on("connection", socket => {
   socket.on("join", ({ name, room }, callback) => {
     join(socket, name, room, callback);

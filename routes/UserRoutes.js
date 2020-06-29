@@ -59,6 +59,7 @@ router.post(
       if (room) res.status(400).json({ error: "This name is already taken" });
       const newRoom = new ChatRoom({
         name: chatroom,
+        founder: user,
         users: user
       });
       newRoom
@@ -91,4 +92,5 @@ router.post(
     }
   }
 );
+
 module.exports = router;
