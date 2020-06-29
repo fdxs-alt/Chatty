@@ -5,6 +5,10 @@ const ChatroomSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  founder: {
+    type: String,
+    required: true
+  },
   users: {
     type: [String],
     required: true
@@ -25,4 +29,4 @@ const ChatroomSchema = new mongoose.Schema({
   ]
 });
 
-module.exports = mongoose.model('ChatRoom', ChatroomSchema);
+module.exports = mongoose.model("ChatRoom", ChatroomSchema);
