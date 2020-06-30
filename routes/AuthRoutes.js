@@ -88,4 +88,7 @@ router.post("/recoverpassword", (req, res) => {
       .json({ message: "Link to reset has been send sucessfully" });
   });
 });
+router.post('/reset', (req, res) => {
+  
+})
 module.exports = router;
