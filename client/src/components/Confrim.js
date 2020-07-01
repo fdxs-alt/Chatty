@@ -18,10 +18,9 @@ const Confrim = () => {
       });
     setLoading(false);
   }, []);
-
   if (loading) return <h1>Loading</h1>;
   else
-    return <div>{!error ? <h1>{message.message}</h1> : <h1>{error}</h1>}</div>;
+    return <div>{message ? <h1>{message.message}</h1> : <h1>{error}</h1>}</div>;
 };
 
 export default Confrim;

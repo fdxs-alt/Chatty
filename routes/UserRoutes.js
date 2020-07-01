@@ -23,9 +23,9 @@ router.get(
     const { authorization } = req.headers;
     const token = authorization.split(" ")[1];
     try {
-      const decoded = jwt.verify(token, process.env.secret).sub;
-
-      const user = await User.findById(decoded).select("-password");
+      const decoded = jwt.verify(token, process.env.secret);
+      if (!decoded.hasOwnProperty('sub')) return res.status(401).json({error: "User unauthorized"})
+      const user = await User.findById(decoded.sub).select("-password");
       res.status(200).json(user);
     } catch (err) {
       res.status(401).json({ error: "there was an error" });
