@@ -5,6 +5,7 @@ const emailValidator = require("email-validator");
 const { resetPassword } = require("../utils/resetPassword");
 const { sendEmail } = require("../utils/confirmMail");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 require("../config/passport");
 router.post("/register", (req, res) => {
   const { email, nick, password } = req.body;
@@ -31,7 +32,7 @@ router.post("/register", (req, res) => {
         newUser
           .save()
           .then(() => {
-            const token = newUser.createJWT();
+            const token = jwt.sign(newUser.email, process.env.secret);
             sendEmail(token, newUser.email);
             res
               .status(200)
@@ -44,12 +45,16 @@ router.post("/register", (req, res) => {
 });
 router.post("/confirm/:token", (req, res) => {
   const { token } = req.params;
-  decoded = jwt.verify(token, process.env.secret);
+  const decoded = jwt.verify(token, process.env.secret);
   if (!decoded) return res.status(400).json({ error: "Can't verify user" });
-  User.findByIdAndUpdate(decoded.sub, { confirmed: true }, (err, upadated) => {
-    if (err) return res.status(400).json({ error: err });
-    res.status(200).json({ message: "Your account has been verified" });
-  });
+  User.findOneAndUpdate(
+    { email: decoded },
+    { confirmed: true },
+    (err, upadated) => {
+      if (err) return res.status(400).json({ error: err });
+      res.status(200).json({ message: "Your account has been verified" });
+    }
+  );
 });
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -79,7 +84,9 @@ router.post("/recoverpassword", (req, res) => {
   const { email } = req.body;
   User.findOne({ email }).then(user => {
     if (!user) res.status(400).json({ error: "There's no such account" });
-    const token = user.createJWT();
+    const token = jwt.sign({ email }, process.env.secret, {
+      expiresIn: 600
+    });
     resetPassword(token, user.email).catch(error =>
       res.status(500).json({ error })
     );
@@ -87,5 +94,24 @@ router.post("/recoverpassword", (req, res) => {
       .status(200)
       .json({ message: "Link to reset has been send sucessfully" });
   });
+});
+router.post("/reset/:token", async (req, res) => {
+  const { token } = req.params;
+  const { password, confirmPassword } = req.body;
+  const decoded = jwt.verify(token, process.env.secret);
+  if (!decoded) return res.status(400).json({ error: "Can't verify user" });
+  if (password !== confirmPassword)
+    return res.status(400).json({ error: "Passwords don't match each other" });
+  if (password.length < 6)
+    return res
+      .status(400)
+      .json({ error: "Password must be at least 6 characters" });
+  try {
+    const newPassword = await bcrypt.hash(password, 10);
+    User.findOneAndUpdate({ email: decoded.email }, { password: newPassword });
+    return res.status(200).json({ message: "Password changed successfully" });
+  } catch (error) {
+    res.status(400).json(error);
+  }
 });
 module.exports = router;
