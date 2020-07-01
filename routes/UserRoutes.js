@@ -24,7 +24,8 @@ router.get(
     const token = authorization.split(" ")[1];
     try {
       const decoded = jwt.verify(token, process.env.secret);
-      if (!decoded.hasOwnProperty('sub')) return res.status(401).json({error: "User unauthorized"})
+      if (!decoded.hasOwnProperty("sub"))
+        return res.status(401).json({ error: "User unauthorized" });
       const user = await User.findById(decoded.sub).select("-password");
       res.status(200).json(user);
     } catch (err) {
@@ -86,11 +87,36 @@ router.post(
     try {
       const newPassword = await bcrypt.hash(password, 10);
       User.findByIdAndUpdate(userID, { password: newPassword });
-      return res.status(200).json({message: "Password changed successfully"})
+      return res.status(200).json({ message: "Password changed successfully" });
     } catch (error) {
       res.status(400).json(error);
     }
   }
 );
+router.get(
+  "/messeges/:roomName/page/:page_number",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { roomName, page_number } = req.params;
+    const page = parseInt(page_number);
 
+    ChatRoom.findOne({ name: roomName }).then(chat => {
+      if (!chat) return res.status(400).json({ error: "Can't find chatroom" });
+
+      const allMessages = chat.messages.slice(
+        chat.messages.length - (page + 1) * 10,
+        chat.messages.length - page * 10
+      );
+      if (allMessages) {
+        setTimeout(() => {
+          res.json(allMessages);
+        }, 1000);
+      } else {
+        res
+          .status(400)
+          .json({ error: `No items with the specified parameters` });
+      }
+    });
+  }
+);
 module.exports = router;

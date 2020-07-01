@@ -17,6 +17,7 @@ const ChatRoom = ({ auth }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(0)
   const socket = io.connect("http://localhost:5000", {
     query: `token=${auth.token.split(" ")[1]}`
   });
@@ -26,10 +27,9 @@ const ChatRoom = ({ auth }) => {
     setName(name);
     setLoading(true);
     
-    Axios.get(`/user/getMessages/${room}`, setConfig(auth.token))
+    Axios.get(`/user/messeges/${room}/page/${page}`, setConfig(auth.token))
       .then(res => {
-
-        setMessages(oldMessages=> [...res.data.messages, ...oldMessages])
+        setMessages(oldMessages=> [...res.data, ...oldMessages])
         setLoading(false);
       })
       .catch(err => console.log(err));
