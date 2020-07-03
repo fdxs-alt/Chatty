@@ -13,7 +13,7 @@ router.get(
       .then(chatrooms => {
         res.status(200).json(chatrooms);
       })
-      .catch(err => console.log(err));
+      .catch(err => res.status(404).json({error: err}));
   }
 );
 router.get(
