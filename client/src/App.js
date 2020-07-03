@@ -7,7 +7,8 @@ import ChatRoom from './components/ChatRoom'
 import Confirm from './components/Confrim'
 import {connect} from 'react-redux'
 import {getUser} from './redux/actions/AuthActions'
-const App = ({auth, getUser}) => {
+import PrivateRoute from './util/PrivateRoute'
+const App = ({getUser}) => {
 
   useEffect(() => {
     getUser();
@@ -18,14 +19,12 @@ const App = ({auth, getUser}) => {
       <Switch>
         <Route path="/login" component={LoginPage}/>
         <Route path="/register" component={RegisterPage} />
-        <Route path="/dashboard" component={Dashboard} />
-        <Route path="/chat" component={ChatRoom} />
-        <Route path='/confirm' component={Confirm}/>
+        <PrivateRoute path="/dashboard" component={Dashboard} />
+        <PrivateRoute path="/chat" component={ChatRoom} />
+        <PrivateRoute path='/confirm' component={Confirm}/>
       </Switch>
     </Router>
   );
 };
-const mapStateToProps = state => ({
-  auth: state.auth
-});
-export default connect(mapStateToProps, {getUser})(App);
+
+export default connect(null, {getUser})(App);
