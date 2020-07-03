@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import styles from "../styles/Messages.module.css";
 const Message = ({ message, auth }) => {
@@ -17,7 +17,6 @@ const Message = ({ message, auth }) => {
           <p>{message.content}</p>
         </div>
       )}
-      
     </div>
   );
 };
