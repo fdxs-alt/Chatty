@@ -108,9 +108,7 @@ router.get(
         chat.messages.length - page * 10
       );
       if (allMessages) {
-        setTimeout(() => {
-          res.json(allMessages);
-        }, 1000);
+        res.json(allMessages);
       } else {
         res
           .status(400)

@@ -6,18 +6,17 @@ import Spinner from "./Spinner";
 import styles from "../styles/Dashboard.module.css";
 import Messages from "./Messages";
 import { Button, Input } from "./Basic";
-import Axios from "axios";
-import { setConfig } from "../util/setConfig";
-import queryString from "query-string"
+import { fetchMessages } from "../util/fetchMessages";
+import queryString from "query-string";
 
 const ChatRoom = ({ auth }) => {
-  
   const [roomName, setRoom] = useState("");
   const [userName, setName] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(0);
+  const [canLoad, setCanLoad] = useState(true);
   const socket = io.connect("http://localhost:5000", {
     query: `token=${auth.token.split(" ")[1]}`
   });
@@ -26,21 +25,16 @@ const ChatRoom = ({ auth }) => {
     setRoom(room);
     setName(name);
     setLoading(true);
-    
-    Axios.get(`/user/messeges/${room}/page/${page}`, setConfig(auth.token))
-      .then(res => {
-        setMessages(oldMessages=> [...res.data, ...oldMessages])
-        setLoading(false);
-      })
-      .catch(err => console.log(err));
-    
+
+    fetchMessages(page, room, auth.token, setLoading, setMessages, setCanLoad);
+    setPage(oldPage => oldPage + 1);
     socket.emit("join", { name, room }, () => {});
     return () => {
       socket.emit("disconnect");
       socket.disconnect();
     };
   }, []);
-  
+
   useEffect(() => {
     socket.on("message", message => {
       setMessages(oldValue => [...oldValue, message]);
@@ -54,14 +48,29 @@ const ChatRoom = ({ auth }) => {
         setMessage("");
       });
   };
-  if (loading || auth.isLoading || auth.isLoading==null)
+  const handleLoadMore = () => {
+    setPage(oldPage => oldPage + 1);
+    fetchMessages(
+      page,
+      roomName,
+      auth.token,
+      setLoading,
+      setMessages,
+      setCanLoad
+    );
+  };
+  if (loading || auth.isLoading || auth.isLoading == null)
     return <Spinner loading={loading} size={300} />;
   else
     return (
       <div className={styles.container}>
         <Menu user={auth.user} />
         <div className={styles.content}>
-          <Messages messages={messages} />
+          <Messages
+            messages={messages}
+            canLoad={canLoad}
+            handleLoadMore={handleLoadMore}
+          />
           <form className={styles.sendingCompontents}>
             <Input message={message} setMessage={setMessage} />
             <Button handleClick={handleClick} />

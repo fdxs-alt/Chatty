@@ -7,21 +7,22 @@
   font-size: 1.3rem;
 }
 .messageInput:focus {
-    outline: none;
-    border-radius: 1.5rem;
-    border: 2px solid #F14E75;
+  outline: none;
+  border-radius: 1.5rem;
+  border: 2px solid #f14e75;
 }
 .messageButton {
+  font-size: 1.2rem;
   flex: 1;
   margin-left: 0.8rem;
   border-radius: 1.5rem;
-  background-color: #F14E75;
+  background-color: #f14e75;
   color: white;
   padding: 1.3rem;
   border: 1px solid white;
 }
 .messageButton:focus {
-    outline: none;
-    border-radius: 1.5rem;
-    border: 2px solid black;
+  outline: none;
+  border-radius: 1.5rem;
+  border: 2px solid black;
 }
