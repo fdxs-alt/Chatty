@@ -6,8 +6,7 @@ import Spinner from "./Spinner";
 import styles from "../styles/Dashboard.module.css";
 import Messages from "./Messages";
 import { Button, Input } from "./Basic";
-import Axios from "axios";
-import { setConfig } from "../util/setConfig";
+import { fetchMessages } from "../util/fetchMessages";
 import queryString from "query-string";
 
 const ChatRoom = ({ auth }) => {
@@ -27,14 +26,8 @@ const ChatRoom = ({ auth }) => {
     setName(name);
     setLoading(true);
 
-    Axios.get(`/user/messeges/${room}/page/${page}`, setConfig(auth.token))
-      .then(res => {
-        setMessages(oldMessages => [...res.data, ...oldMessages]);
-        setPage(oldPage => oldPage + 1);
-        setLoading(false);
-      })
-      .catch(err => console.log(err));
-
+    fetchMessages(page, room, auth.token, setLoading, setMessages, setCanLoad);
+    setPage(oldPage => oldPage + 1);
     socket.emit("join", { name, room }, () => {});
     return () => {
       socket.emit("disconnect");
@@ -57,15 +50,14 @@ const ChatRoom = ({ auth }) => {
   };
   const handleLoadMore = () => {
     setPage(oldPage => oldPage + 1);
-    console.log(page);
-    Axios.get(`/user/messeges/${roomName}/page/${page}`, setConfig(auth.token))
-      .then(res => {
-        if (res.data.length <= 0) setCanLoad(false);
-        setMessages(oldMessages => [...res.data, ...oldMessages]);
-
-        setLoading(false);
-      })
-      .catch(err => console.log(err));
+    fetchMessages(
+      page,
+      roomName,
+      auth.token,
+      setLoading,
+      setMessages,
+      setCanLoad
+    );
   };
   if (loading || auth.isLoading || auth.isLoading == null)
     return <Spinner loading={loading} size={300} />;
@@ -74,8 +66,11 @@ const ChatRoom = ({ auth }) => {
       <div className={styles.container}>
         <Menu user={auth.user} />
         <div className={styles.content}>
-          {canLoad ? <button onClick={handleLoadMore}>Load more</button> : null}
-          <Messages messages={messages} />
+          <Messages
+            messages={messages}
+            canLoad={canLoad}
+            handleLoadMore={handleLoadMore}
+          />
           <form className={styles.sendingCompontents}>
             <Input message={message} setMessage={setMessage} />
             <Button handleClick={handleClick} />

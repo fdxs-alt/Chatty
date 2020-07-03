@@ -30,10 +30,10 @@ body {
   justify-content: space-between;
   background-color: rgba(209, 208, 208, 0.432);
 }
-
 .sendingCompontents {
   width: 100%;
   display: flex;
   padding: 0.8rem;
   justify-content: space-between;
+  border: 1px solid #e3e0da;
 }
