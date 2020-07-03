@@ -3,14 +3,19 @@ import styles from "../styles/Menu.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../redux/actions/AuthActions";
+import { Button } from "./Basic";
 import Modal from "./Modal";
-const Menu = ({ user, logout }) => {
+import { updateChatroom } from "../redux/actions/RoomActions";
+const Menu = ({logout, auth, updateChatroom }) => {
   const [open, setOpen] = useState(false);
-  console.log(open);
+  const [roomName, setRoomName] = useState("");
+  const handleClick = () => {
+    updateChatroom(roomName, auth.user.nick, auth.token);
+  };
   return (
     <nav className={styles.navbar}>
       <div className={styles.hero}>
-        <h1 className={styles.nick}>{user.nick}</h1>
+        <h1 className={styles.nick}>{auth.user.nick}</h1>
       </div>
       <ul className={styles.menu}>
         <li>
@@ -20,7 +25,12 @@ const Menu = ({ user, logout }) => {
         </li>
         <li>
           <Modal open={open} setOpen={setOpen}>
-            <input type="text" />
+            <input
+              type="text"
+              value={roomName}
+              onChange={e => setRoomName(e.target.value)}
+            />
+            <Button handleClick={handleClick} />
           </Modal>
           <button onClick={() => setOpen(true)}>Create new chat</button>
         </li>
@@ -32,5 +42,7 @@ const Menu = ({ user, logout }) => {
     </nav>
   );
 };
-
-export default connect(null, { logout })(Menu);
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+export default connect(mapStateToProps, { logout, updateChatroom })(Menu);

@@ -10,7 +10,7 @@ const Dashboard = ({ auth }) => {
   else
     return (
       <div className={styles.container}>
-        <Menu user={auth.user} />
+        <Menu />
         <ChatList />
       </div>
     );

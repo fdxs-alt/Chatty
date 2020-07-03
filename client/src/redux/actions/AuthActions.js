@@ -45,7 +45,6 @@ export const registerUser = ({ email, nick, password }) => dispatch => {
 };
 
 export const getUser = () => (dispatch, getState) => {
-  
   dispatch({ type: USER_LOADING });
   const token = getState().auth.token;
   const config = {
@@ -68,5 +67,5 @@ export const getUser = () => (dispatch, getState) => {
 };
 
 export const logout = () => dispatch => {
-  dispatch({type: LOGOUT_SUCCESS})
-}
+  dispatch({ type: LOGOUT_SUCCESS });
+};

@@ -16,3 +16,12 @@ export const fetchMessages = (
     })
     .catch(err => console.log(err));
 };
+export const updateChatroom = (roomName, user, token ) => {
+  const roomData = {
+    chatroom: roomName,
+    user
+  };
+  Axios.post("/user/addRoom", roomData, setConfig(token))
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+};
