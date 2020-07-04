@@ -21,7 +21,7 @@ const App = ({getUser}) => {
         <Route path="/register" component={RegisterPage} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/chat" component={ChatRoom} />
-        <PrivateRoute path='/confirm' component={Confirm}/>
+        <Route path='/confirm' component={Confirm}/>
       </Switch>
     </Router>
   );

@@ -6,7 +6,7 @@
 }
 .navbar {
   min-height: 100vh;
-  width: 30%;
+  width: 20%;
   background-color: var(--background-color-main);
   font-size: 1.5rem;
   display: flex;
