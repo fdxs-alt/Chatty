@@ -4,7 +4,7 @@ import loginImage from "../images/3911045.jpg";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/AuthActions";
-const LoginPage = ({ auth, loginUser }) => {
+const LoginPage = ({ auth, loginUser, error }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const handleSubmit = e => {
@@ -71,6 +71,7 @@ const LoginPage = ({ auth, loginUser }) => {
     );
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  error: state.error
 });
 export default connect(mapStateToProps, { loginUser })(LoginPage);
