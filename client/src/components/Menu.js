@@ -11,6 +11,8 @@ const Menu = ({ logout, auth, updateChatroom }) => {
   const handleClick = e => {
     e.preventDefault();
     updateChatroom(roomName, auth.user.nick, auth.token);
+    setOpen(false);
+    setRoomName("");
   };
   return (
     <nav className={styles.navbar}>

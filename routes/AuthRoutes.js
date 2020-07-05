@@ -45,8 +45,13 @@ router.post("/register", (req, res) => {
 });
 router.post("/confirm/:token", (req, res) => {
   const { token } = req.params;
-  const decoded = jwt.verify(token, process.env.secret);
-  if (!decoded) return res.status(400).json({ error: "Can't verify user" });
+  let decoded;
+  try {
+     decoded = jwt.verify(token, process.env.secret);
+  } catch (error) {
+    return res.status(400).json({ error: "You can't verify account now" });
+  }
+
   User.findOneAndUpdate(
     { email: decoded },
     { confirmed: true },
