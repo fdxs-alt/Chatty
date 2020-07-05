@@ -3,7 +3,6 @@ import styles from "../styles/Menu.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../redux/actions/AuthActions";
-import { Button } from "./Basic";
 import Modal from "./Modal";
 import { updateChatroom } from "../redux/actions/RoomActions";
 const Menu = ({logout, auth, updateChatroom }) => {
@@ -25,14 +24,17 @@ const Menu = ({logout, auth, updateChatroom }) => {
         </li>
         <li>
           <Modal open={open} setOpen={setOpen}>
+            <h1 className={styles.create}>Create your own room!</h1>
             <input
               type="text"
               value={roomName}
+              className={styles.modalInput}
               onChange={e => setRoomName(e.target.value)}
+              placeholder="Type name of your room here"
             />
-            <Button handleClick={handleClick} />
+            <button className={styles.createRoomButton} onClick={() => handleClick()}>Create new chat</button>
           </Modal>
-          <button onClick={() => setOpen(true)}>Create new chat</button>
+          <button className={styles.modalButton}onClick={() => setOpen(true)}>Create new chat</button>
         </li>
       </ul>
       <button className={styles.logout} onClick={() => logout()}>
