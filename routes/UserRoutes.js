@@ -13,7 +13,7 @@ router.get(
       .then(chatrooms => {
         res.status(200).json(chatrooms);
       })
-      .catch(err => res.status(404).json({error: err}));
+      .catch(err => res.status(404).json({ error: err }));
   }
 );
 router.get(
@@ -115,6 +115,15 @@ router.get(
           .json({ error: `No items with the specified parameters` });
       }
     });
+  }
+);
+router.delete(
+  "/deleteRoom/:roomID",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    ChatRoom.findByIdAndDelete(req.params.roomID)
+      .then(result => res.status(200).json(result))
+      .catch(error => console.log(error));
   }
 );
 module.exports = router;

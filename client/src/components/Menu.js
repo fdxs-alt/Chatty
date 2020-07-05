@@ -5,10 +5,11 @@ import { connect } from "react-redux";
 import { logout } from "../redux/actions/AuthActions";
 import Modal from "./Modal";
 import { updateChatroom } from "../redux/actions/RoomActions";
-const Menu = ({logout, auth, updateChatroom }) => {
+const Menu = ({ logout, auth, updateChatroom }) => {
   const [open, setOpen] = useState(false);
   const [roomName, setRoomName] = useState("");
-  const handleClick = () => {
+  const handleClick = e => {
+    e.preventDefault();
     updateChatroom(roomName, auth.user.nick, auth.token);
   };
   return (
@@ -32,9 +33,16 @@ const Menu = ({logout, auth, updateChatroom }) => {
               onChange={e => setRoomName(e.target.value)}
               placeholder="Type name of your room here"
             />
-            <button className={styles.createRoomButton} onClick={() => handleClick()}>Create new chat</button>
+            <button
+              className={styles.createRoomButton}
+              onClick={e => handleClick(e)}
+            >
+              Create new chat
+            </button>
           </Modal>
-          <button className={styles.modalButton}onClick={() => setOpen(true)}>Create new chat</button>
+          <button className={styles.modalButton} onClick={() => setOpen(true)}>
+            Create new chat
+          </button>
         </li>
       </ul>
       <button className={styles.logout} onClick={() => logout()}>
