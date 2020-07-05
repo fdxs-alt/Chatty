@@ -1,4 +1,4 @@
-import { LOAD_ROOMS, ADD_ROOM, GET_ROOMS } from "../actions/types";
+import { LOAD_ROOMS, ADD_ROOM, GET_ROOMS, DELETE_ROOM } from "../actions/types";
 
 const initalState = {
   rooms: [],
@@ -21,6 +21,12 @@ export default (state = initalState, action) => {
         ...state,
         rooms: [...state.rooms, action.payload]
       };
+    case DELETE_ROOM:
+      return {
+        ...state,
+        rooms: state.rooms.filter(room => room._id !== action.payload)
+      };
+
     default:
       return {
         ...state

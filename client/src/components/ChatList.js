@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import styles from "../styles/ChatList.module.css";
 import { connect } from "react-redux";
 import Spinner from "./Spinner";
-import { getRooms } from "../redux/actions/RoomActions";
+import { getRooms, deleteRoom } from "../redux/actions/RoomActions";
 import { css } from "glamor";
 import ScrollToBottom from "react-scroll-to-bottom";
 const style = css({
@@ -13,7 +13,7 @@ const style = css({
   maxHeight: "650px",
   padding: "0.2rem"
 });
-const ChatList = ({ auth, rooms, getRooms }) => {
+const ChatList = ({ auth, rooms, getRooms, deleteRoom }) => {
   useEffect(() => {
     getRooms(auth.token);
   }, [auth.token, getRooms]);
@@ -33,6 +33,14 @@ const ChatList = ({ auth, rooms, getRooms }) => {
                 >
                   {chatroom.name}
                 </Link>
+                {chatroom.founder === auth.user.nick ? (
+                  <button
+                    className={styles.modalButton}
+                    onClick={e => deleteRoom(auth.token, chatroom._id)}
+                  >
+                    X
+                  </button>
+                ) : null}
               </li>
             ))}
           </ScrollToBottom>
@@ -44,4 +52,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   rooms: state.rooms
 });
-export default connect(mapStateToProps, { getRooms })(ChatList);
+export default connect(mapStateToProps, { getRooms, deleteRoom })(ChatList);
