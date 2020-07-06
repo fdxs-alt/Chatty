@@ -2,7 +2,6 @@ import {
   LOAD_ROOMS,
   ADD_ROOM,
   GET_ROOMS,
-  GET_ERRORS,
   DELETE_ROOM
 } from "../actions/types";
 
@@ -18,7 +17,6 @@ export const getRooms = token => dispatch => {
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: GET_ERRORS });
     });
 };
 export const deleteRoom = (token, id) => dispatch => {
@@ -29,7 +27,6 @@ export const deleteRoom = (token, id) => dispatch => {
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: GET_ERRORS });
     });
 };
 export const updateChatroom = (roomName, user, token) => dispatch => {
@@ -44,7 +41,6 @@ export const updateChatroom = (roomName, user, token) => dispatch => {
     })
     .catch(err => {
       dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({ type: GET_ERRORS });
     });
 };
 const setConfig = token => {
