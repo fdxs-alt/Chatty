@@ -14,7 +14,7 @@
   justify-content: center;
 }
 .error img {
-  margin-top: 5rem;
+  margin-top: 3rem;
   max-width: 612px;
   border-radius: 50%;
 }
@@ -48,7 +48,7 @@
   margin-bottom: 2rem;
 }
 .success img {
-  margin-top: 6rem;
+  margin-top: 3rem;
   max-width: 800px;
 }
 .link {
@@ -66,4 +66,16 @@
   border-radius: 1.5rem;
   border: 1px solid #f3542d;
   color: #f3542d;
+}
+.emailInput {
+  width: 15%;
+  border-radius: 1.5rem;
+  padding: 0.8rem;
+  border: 1px solid black;
+  margin: 0.8rem 0;
+}
+.emailInput:focus {
+  border-radius: 1.5rem;
+  border: 1px solid #f3542d;
+  outline: none;
 }

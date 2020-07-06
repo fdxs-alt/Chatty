@@ -38,6 +38,9 @@ const Menu = ({ logout, auth, updateChatroom }) => {
             <button
               className={styles.createRoomButton}
               onClick={e => handleClick(e)}
+              onKeyPress={e => {
+                if (e.key === "Enter") handleClick(e);
+              }}
             >
               Create new chat
             </button>
