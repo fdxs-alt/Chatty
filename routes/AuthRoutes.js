@@ -47,19 +47,27 @@ router.post("/confirm/:token", (req, res) => {
   const { token } = req.params;
   let decoded;
   try {
-     decoded = jwt.verify(token, process.env.secret);
+    decoded = jwt.verify(token, process.env.secret);
   } catch (error) {
     return res.status(400).json({ error: "You can't verify account now" });
   }
-
-  User.findOneAndUpdate(
-    { email: decoded },
-    { confirmed: true },
-    (err, upadated) => {
-      if (err) return res.status(400).json({ error: err });
-      res.status(200).json({ message: "Your account has been verified" });
-    }
-  );
+  User.findOne({ email: decoded })
+    .then(user => {
+      if (user.confirmed)
+        return res.status(400).json({
+          confirmed: true,
+          error: "Your account has already been confirmed"
+        });
+      User.findOneAndUpdate(
+        { email: decoded },
+        { confirmed: true },
+        (err, upadated) => {
+          if (err) return res.status(400).json({ error: err });
+          res.status(200).json({ message: "Your account has been verified" });
+        }
+      );
+    })
+    .catch(err => console.log(err));
 });
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
@@ -103,7 +111,13 @@ router.post("/recoverpassword", (req, res) => {
 router.post("/reset/:token", async (req, res) => {
   const { token } = req.params;
   const { password, confirmPassword } = req.body;
-  const decoded = jwt.verify(token, process.env.secret);
+  let decoded;
+  try {
+    decoded = jwt.verify(token, process.env.secret);
+  } catch (error) {
+    console.log(error);
+    return res.status(401).json({ error: "Changing password is impossible" });
+  }
   if (!decoded) return res.status(400).json({ error: "Can't verify user" });
   if (password !== confirmPassword)
     return res.status(400).json({ error: "Passwords don't match each other" });
@@ -118,5 +132,19 @@ router.post("/reset/:token", async (req, res) => {
   } catch (error) {
     res.status(400).json(error);
   }
+});
+router.post("/resend", (req, res) => {
+  const { email } = req.body;
+  User.findOne({ email }).then(user => {
+    if (!user) return res.status(400).json({ error: "Can't verfiy user" });
+    if (user.confirmed)
+      return res
+        .status(400)
+        .json({ error: "Account has already been verified" });
+    const token = jwt.sign(newUser.email, process.env.secret);
+    sendEmail(token, newUser.email).then(() => {
+      res.status(200).json({ message: "Email send sucessfully" });
+    });
+  });
 });
 module.exports = router;
