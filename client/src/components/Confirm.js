@@ -6,7 +6,7 @@ import styles from "../styles/Confirm.module.css";
 import errorIlu from "../images/error.jpg";
 import successIlu from "../images/czat.jpg";
 import { Link } from "react-router-dom";
-const Confrim = () => {
+const Confirm = () => {
   const [error, setError] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -75,4 +75,4 @@ const Confrim = () => {
     );
 };
 
-export default Confrim;
+export default Confirm;

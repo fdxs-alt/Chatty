@@ -57,7 +57,7 @@ router.post(
         .status(400)
         .json({ error: "You need to specify the name of the chat" });
     ChatRoom.findOne({ name: chatroom }).then(room => {
-      if (room) res.status(400).json({ error: "This name is already taken" });
+      if (room) return res.status(400).json({ error: "This name is already taken" });
       const newRoom = new ChatRoom({
         name: chatroom,
         founder: user,
