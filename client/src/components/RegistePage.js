@@ -48,7 +48,7 @@ const RegistePage = ({ registerUser }) => {
             onChange={e => setPassword(e.target.value)}
           />
           <button className={styles.registerButton} onClick={handleSubmit}>
-            Login
+            Register
           </button>
         </form>
         <Link className={styles.loginLink} to="/login">

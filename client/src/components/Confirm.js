@@ -5,12 +5,13 @@ import Spinner from "./Spinner";
 import styles from "../styles/Confirm.module.css";
 import errorIlu from "../images/error.jpg";
 import successIlu from "../images/czat.jpg";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 const Confirm = () => {
   const [error, setError] = useState([]);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
+  const { token } = queryString.parse(window.location.search);
   const sendEmail = e => {
     e.preventDefault();
     const req = {
@@ -23,7 +24,7 @@ const Confirm = () => {
   };
   useEffect(() => {
     setLoading(true);
-    const { token } = queryString.parse(window.location.search);
+
     axios
       .post(`/auth/confirm/${token}`)
       .then(res => {
@@ -34,7 +35,8 @@ const Confirm = () => {
         setError(err.response.data);
         setLoading(false);
       });
-  }, []);
+  }, [token]);
+  if (!token) return <Redirect to="/login" />;
   if (loading) return <Spinner loading={loading} size={300} />;
   else
     return (
@@ -52,7 +54,7 @@ const Confirm = () => {
             <img src={errorIlu} alt="error-ilu" />
             <h1>{error.error}</h1>
             <Link className={styles.link} to="/login">
-              Login in, or
+              Log in
             </Link>
             {!error.confirmed && (
               <>

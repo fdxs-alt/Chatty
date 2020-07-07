@@ -115,7 +115,6 @@ router.post("/reset/:token", async (req, res) => {
   try {
     decoded = jwt.verify(token, process.env.secret);
   } catch (error) {
-    console.log(error);
     return res.status(401).json({ error: "Changing password is impossible" });
   }
   if (!decoded) return res.status(400).json({ error: "Can't verify user" });
@@ -127,7 +126,10 @@ router.post("/reset/:token", async (req, res) => {
       .json({ error: "Password must be at least 6 characters" });
   try {
     const newPassword = await bcrypt.hash(password, 10);
-    User.findOneAndUpdate({ email: decoded.email }, { password: newPassword });
+    await User.findOneAndUpdate(
+      { email: decoded.email },
+      { password: newPassword }
+    );
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error) {
     res.status(400).json(error);
