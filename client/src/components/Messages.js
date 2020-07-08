@@ -9,7 +9,6 @@ const Messages = ({ messages, canLoad, handleLoadMore }) => {
     display: "flex",
     flexDirection: "column",
     maxHeight: "700px",
-    border: "1px solid #e3e0da",
     padding: "0.2rem"
   });
   const button = css({

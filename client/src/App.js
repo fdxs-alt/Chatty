@@ -9,6 +9,7 @@ import ResetPassword from "./components/ResetPassword";
 import { connect } from "react-redux";
 import { getUser } from "./redux/actions/AuthActions";
 import PrivateRoute from "./util/PrivateRoute";
+import Options from './components/Options'
 const App = ({ getUser }) => {
   useEffect(() => {
     getUser();
@@ -23,6 +24,7 @@ const App = ({ getUser }) => {
         <PrivateRoute path="/chat" component={ChatRoom} />
         <Route path="/confirm" component={Confirm} />
         <Route path="/reset" component={ResetPassword} />
+        <PrivateRoute path="/options" component={Options}/>
       </Switch>
     </Router>
   );
