@@ -6,6 +6,7 @@
 }
 .chatlist {
   width: 80%;
+  background-color: rgba(179, 172, 172, 0.048);
 }
 .chatlist h1 {
   width: 100%;

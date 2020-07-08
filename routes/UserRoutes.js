@@ -57,7 +57,8 @@ router.post(
         .status(400)
         .json({ error: "You need to specify the name of the chat" });
     ChatRoom.findOne({ name: chatroom }).then(room => {
-      if (room) return res.status(400).json({ error: "This name is already taken" });
+      if (room)
+        return res.status(400).json({ error: "This name is already taken" });
       const newRoom = new ChatRoom({
         name: chatroom,
         founder: user,
@@ -124,6 +125,40 @@ router.delete(
     ChatRoom.findByIdAndDelete(req.params.roomID)
       .then(result => res.status(200).json(result))
       .catch(error => console.log(error));
+  }
+);
+router.post(
+  "/changeNick/:userID",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { userID } = req.params;
+    const { nick } = req.body;
+    User.findOne({ nick }).then(user => {
+      if (user)
+        return res
+          .status(400)
+          .json({ error: "User with passed nickname already exists" });
+      User.findByIdAndUpdate(userID, { nick })
+        .then(() => {
+          res
+            .status(200)
+            .json({ message: "You've changed your nick successfully" });
+        })
+        .catch(() => res.status(500).json({ error: "An error occured" }));
+    });
+  }
+);
+router.delete(
+  "/deleteAccount/:userID",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const { userID } = req.params;
+    User.findByIdAndDelete(userID).then(() => {
+      res
+        .status(200)
+        .json({ message: "Account has been deleted" })
+        .catch(() => res.status(500).json({ error: "An error occured " }));
+    });
   }
 );
 module.exports = router;
