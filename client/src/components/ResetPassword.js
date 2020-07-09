@@ -12,7 +12,8 @@ const ResetPassword = () => {
 
   const changePassword = e => {
     e.preventDefault();
-
+    setMessage("");
+    setError("");
     if (!token) return <Redirect to="/login" />;
     const data = {
       password,
@@ -47,8 +48,8 @@ const ResetPassword = () => {
             value={confirmPassword}
             onChange={e => setConfirmPassword(e.target.value)}
           />
-          {error.length > 0 && <h4 className={styles.error}>{error}</h4>}
-          {message.length > 0 && <h4 className={styles.success}>{message}</h4>}
+          <h4 className={styles.error}>{error}</h4>
+          <h4 className={styles.success}>{message}</h4>
           <button
             onClick={e => changePassword(e)}
             onKeyPress={e => {

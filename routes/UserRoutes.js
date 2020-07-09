@@ -90,7 +90,7 @@ router.post(
       User.findByIdAndUpdate(userID, { password: newPassword });
       return res.status(200).json({ message: "Password changed successfully" });
     } catch (error) {
-      res.status(400).json(error);
+      res.status(400).json(res.status(500).json({ error: "An error occured" }));
     }
   }
 );
@@ -144,7 +144,7 @@ router.post(
             .status(200)
             .json({ message: "You've changed your nick successfully" });
         })
-        .catch(() => res.status(500).json({ error: "An error occured" }));
+        .catch(err => res.status(500).json({ error: "An error occured", err }));
     });
   }
 );
