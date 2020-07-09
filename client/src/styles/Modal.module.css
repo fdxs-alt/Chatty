@@ -50,3 +50,8 @@
   border-radius: 1.2rem;
   border: 1px solid white;
 }
+@media (max-width: 1000px) {
+  .modalMain {
+    width: 95%;
+  }
+}

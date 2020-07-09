@@ -163,5 +163,12 @@
     border-radius: 1.2rem;
     border: 1px solid white;
   }
+  .createRoomButton {
+    width: 60%;
+    padding: 0.8rem;
+  }
+  .modalInput {
+    width: 80%;
+  }
   
 }

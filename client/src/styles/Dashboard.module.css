@@ -7,6 +7,7 @@
 body {
   font-family: "Raleway", sans-serif;
   width: 100%;
+  background-color: rgba(179, 172, 172, 0.048);
 }
 .container {
   width: 100%;
@@ -39,5 +40,6 @@ body {
 @media (max-width: 1000px) {
   .container {
     flex-direction: column;
+   
   }
 }
