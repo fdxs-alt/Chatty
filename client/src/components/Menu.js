@@ -22,7 +22,7 @@ const Menu = ({ logout, auth, updateChatroom }) => {
       <ul className={styles.menu}>
         <li>
           <Link to="/options" className={styles.link}>
-            My account
+            Account
           </Link>
         </li>
         <li>
@@ -46,7 +46,7 @@ const Menu = ({ logout, auth, updateChatroom }) => {
             </button>
           </Modal>
           <button className={styles.modalButton} onClick={() => setOpen(true)}>
-            Create new chat
+            Create
           </button>
         </li>
       </ul>

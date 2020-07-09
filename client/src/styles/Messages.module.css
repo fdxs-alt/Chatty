@@ -32,3 +32,8 @@
 .message .nickname {
   color: red;
 }
+@media (max-width: 1000px) {
+  .messageWrapper {
+    height: 50vh;
+  }
+}

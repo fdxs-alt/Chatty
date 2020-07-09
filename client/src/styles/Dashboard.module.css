@@ -36,3 +36,8 @@ body {
   padding: 0.8rem;
   justify-content: space-between;
 }
+@media (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+  }
+}
