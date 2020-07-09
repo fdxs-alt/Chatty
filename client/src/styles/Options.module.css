@@ -1,10 +1,10 @@
 .container {
   width: 100%;
   background-color: rgba(179, 172, 172, 0.048);
-  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 2rem;
 }
 .container h2 {
   font-size: 1.8rem;
@@ -22,18 +22,24 @@
 }
 .imageContainer {
   width: 60%;
-  max-width: 512px;
-  max-height: 512px;
+  font-size: 20vw;
   margin: auto;
+  color: #0048ad;
 }
 .form {
-  max-width: 550px;
-  width: 50%;
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.form input {
+.formContainer {
+  max-width: 550px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.formContainer input {
   max-width: 500px;
   width: 100%;
   padding: 0.8rem;
@@ -42,13 +48,13 @@
   font-size: 1rem;
   margin-bottom: 1.2rem;
 }
-.form label {
+.formContainer label {
   max-width: 500px;
   width: 100%;
   margin-bottom: 0.8rem;
   color: #0c351a;
 }
-.form button {
+.formContainer button {
   width: 40%;
   padding: 0.8rem;
   font-size: 0.8rem;
@@ -68,11 +74,11 @@
   font-size: 1.6rem;
   width: 100%;
 }
-.form input:focus {
+.formContainer input:focus {
   outline: none;
   border: 2px solid #0c351a;
 }
-.form button:focus {
+.formContainer button:focus {
   outline: none;
   border: 2px solid red;
 }
@@ -80,6 +86,22 @@
   outline: none;
   font-weight: 700;
 }
-.changePasswordButton:disabled {
-  cursor: not-allowed;
+.error {
+  color: red;
+  margin: 0.5rem 0;
+}
+.success {
+  color: rgb(36, 170, 36);
+  margin: 0.5rem 0;
+}
+@media (max-width: 1000px) {
+  .content {
+    flex-direction: column;
+  }
+  .form {
+    width: 100%;
+  }
+  .formContainer button {
+    width: 80%;
+  }
 }
