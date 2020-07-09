@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import styles from "../styles/Messages.module.css";
 const Message = ({ message, auth }) => {
   let isSender = false;
-  if (message.issuedBy === auth.user.nick) isSender = true;
+  if (message.emailOfIssuer === auth.user.email) isSender = true;
   return (
     <div className={styles.messageWrapper}>
       {isSender ? (

@@ -8,7 +8,7 @@ import Messages from "./Messages";
 import { Button, Input } from "./Basic";
 import { fetchMessages } from "../util/fetchMessages";
 import queryString from "query-string";
-
+let socket;
 const ChatRoom = ({ auth }) => {
   const [roomName, setRoom] = useState("");
   const [userName, setName] = useState("");
@@ -17,10 +17,11 @@ const ChatRoom = ({ auth }) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [canLoad, setCanLoad] = useState(true);
-  const socket = io.connect("http://localhost:5000", {
-    query: `token=${auth.token.split(" ")[1]}`
-  });
+
   useEffect(() => {
+    socket = io.connect("http://localhost:5000", {
+      query: `token=${auth.token.split(" ")[1]}`
+    });
     const { room, name } = queryString.parse(window.location.search);
     setRoom(room);
     setName(name);
@@ -44,9 +45,16 @@ const ChatRoom = ({ auth }) => {
   const handleClick = e => {
     e.preventDefault();
     if (message)
-      socket.emit("sendMessage", message, userName, roomName, () => {
-        setMessage("");
-      });
+      socket.emit(
+        "sendMessage",
+        message,
+        userName,
+        roomName,
+        auth.user.email,
+        () => {
+          setMessage("");
+        }
+      );
   };
   const handleLoadMore = () => {
     setPage(oldPage => oldPage + 1);

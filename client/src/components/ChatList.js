@@ -6,6 +6,8 @@ import Spinner from "./Spinner";
 import { getRooms, deleteRoom } from "../redux/actions/RoomActions";
 import { css } from "glamor";
 import ScrollToBottom from "react-scroll-to-bottom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFrown } from "@fortawesome/free-solid-svg-icons";
 const style = css({
   width: "100%",
   display: "flex",
@@ -22,7 +24,17 @@ const ChatList = ({ auth, rooms, getRooms, deleteRoom }) => {
     return (
       <div className={styles.chatlist}>
         <h1>Chatrooms</h1>
+
         <ul className={styles.chats}>
+          {rooms.rooms.length === 0 && (
+            <h2 style={{ textAlign: "center" }}>
+              There aren't any chatrooms!{" "}
+              <FontAwesomeIcon
+                className={styles.imageContainer}
+                icon={faFrown}
+              />
+            </h2>
+          )}
           <ScrollToBottom className={style}>
             {rooms.rooms.map(chatroom => (
               <li key={chatroom._id}>
@@ -33,7 +45,7 @@ const ChatList = ({ auth, rooms, getRooms, deleteRoom }) => {
                 >
                   {chatroom.name}
                 </Link>
-                {chatroom.founder === auth.user.nick ? (
+                {chatroom.founder === auth.user.email ? (
                   <button
                     className={styles.modalButton}
                     onClick={e => deleteRoom(auth.token, chatroom._id)}

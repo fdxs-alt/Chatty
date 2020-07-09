@@ -29,10 +29,11 @@ export const deleteRoom = (token, id) => dispatch => {
       dispatch(returnErrors(err.response.data, err.response.status));
     });
 };
-export const updateChatroom = (roomName, user, token) => dispatch => {
+export const updateChatroom = (roomName, user, token, email) => dispatch => {
   const roomData = {
     chatroom: roomName,
-    user
+    user, 
+    email
   };
   Axios.post("/user/addRoom", roomData, setConfig(token))
     .then(res => {

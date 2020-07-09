@@ -10,7 +10,7 @@ const Menu = ({ logout, auth, updateChatroom }) => {
   const [roomName, setRoomName] = useState("");
   const handleClick = e => {
     e.preventDefault();
-    updateChatroom(roomName, auth.user.nick, auth.token);
+    updateChatroom(roomName, auth.user.nick, auth.token, auth.user.email);
     setOpen(false);
     setRoomName("");
   };

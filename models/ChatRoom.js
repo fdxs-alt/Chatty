@@ -21,6 +21,9 @@ const ChatroomSchema = new mongoose.Schema({
       issuedBy: {
         type: String
       },
+      emailOfIssuer: {
+        type: String
+      },
       date: {
         type: String,
         default: moment().format("MMMM Do YYYY, h:mm:ss a")

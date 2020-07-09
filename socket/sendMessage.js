@@ -1,6 +1,6 @@
 const ChatRoom = require("../models/ChatRoom");
 const moment = require("moment");
-module.exports = function(message, io, callback, name, room) {
+module.exports = function(message, io, callback, email, name, room) {
   ChatRoom.findOne({ name: room }).then(chatroom => {
     ChatRoom.findByIdAndUpdate(
       { _id: chatroom._id },
@@ -9,7 +9,8 @@ module.exports = function(message, io, callback, name, room) {
           messages: [
             {
               content: message,
-              issuedBy: name
+              issuedBy: name,
+              emailOfIssuer: email
             }
           ]
         }
@@ -18,6 +19,7 @@ module.exports = function(message, io, callback, name, room) {
     io.to(room).emit("message", {
       issuedBy: name,
       content: message,
+      emailOfIssuer: email,
       date: moment().format("MMMM Do YYYY, h:mm:ss a")
     });
   });

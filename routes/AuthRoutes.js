@@ -16,6 +16,10 @@ router.post("/register", (req, res) => {
     return res
       .status(400)
       .json({ error: "Password must be at least 6 characters" });
+  if (nick.length < 4)
+    return res
+      .status(400)
+      .json({ error: "Nick must be at least 4 characters" });
   if (!emailValidator.validate(email))
     return res.status(400).json({ error: "Email adress doesn't exist" });
   User.findOne({ nick }).then(user => {

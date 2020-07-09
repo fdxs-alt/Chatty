@@ -31,8 +31,8 @@ io.on("connection", socket => {
     join(socket, name, room, callback);
     callback();
   });
-  socket.on("sendMessage", (message, name, room, callback) => {
-    sendMessage(message, io, callback, name, room);
+  socket.on("sendMessage", (message, name, room, email, callback) => {
+    sendMessage(message, io, callback, email, name, room);
     callback();
   });
   socket.on("disconnect", ({ name }) => {

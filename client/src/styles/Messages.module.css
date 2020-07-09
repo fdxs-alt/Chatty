@@ -33,7 +33,10 @@
   color: red;
 }
 @media (max-width: 1000px) {
-  .messageWrapper {
-    height: 50vh;
+  .message {
+    width: 60%;
+  }
+  .ownMessage {
+    width: 60%; 
   }
 }

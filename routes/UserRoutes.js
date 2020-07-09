@@ -51,7 +51,7 @@ router.post(
   "/addRoom",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { chatroom, user } = req.body;
+    const { chatroom, user, email } = req.body;
     if (!chatroom)
       return res
         .status(400)
@@ -61,7 +61,7 @@ router.post(
         return res.status(400).json({ error: "This name is already taken" });
       const newRoom = new ChatRoom({
         name: chatroom,
-        founder: user,
+        founder: email,
         users: user
       });
       newRoom
@@ -87,7 +87,7 @@ router.post(
         .json({ error: "Password must be at least 6 characters" });
     try {
       const newPassword = await bcrypt.hash(password, 10);
-      User.findByIdAndUpdate(userID, { password: newPassword });
+      await User.findByIdAndUpdate(userID, { password: newPassword });
       return res.status(200).json({ message: "Password changed successfully" });
     } catch (error) {
       res.status(400).json(res.status(500).json({ error: "An error occured" }));
@@ -133,6 +133,10 @@ router.post(
   (req, res) => {
     const { userID } = req.params;
     const { nick } = req.body;
+    if (nick.length < 4)
+      return res
+        .status(400)
+        .json({ error: "Nickname must be at least 4 characters" });
     User.findOne({ nick }).then(user => {
       if (user)
         return res
