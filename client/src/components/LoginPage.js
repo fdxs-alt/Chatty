@@ -1,12 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/LoginPage.module.css";
 import loginImage from "../images/3911045.jpg";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/AuthActions";
-const LoginPage = ({ auth, loginUser, error }) => {
+import {clearErrors} from '../redux/actions/ErrorActions'
+const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  useEffect(() => {
+    clearErrors();
+  }, [clearErrors]);
   const handleSubmit = e => {
     e.preventDefault();
     const user = {
@@ -16,6 +20,7 @@ const LoginPage = ({ auth, loginUser, error }) => {
     loginUser(user);
     setEmail("");
     setPassword("");
+    clearErrors()
   };
   if (auth.isAuthenticated) return <Redirect to="/dashboard" />;
   else
@@ -49,6 +54,9 @@ const LoginPage = ({ auth, loginUser, error }) => {
                 setPassword(e.target.value);
               }}
             />
+            {error.message && (
+              <h2 className={styles.error}>{error.message.error}</h2>
+            )}
             <button
               onClick={handleSubmit}
               onKeyPress={e => {
@@ -59,6 +67,7 @@ const LoginPage = ({ auth, loginUser, error }) => {
               Login
             </button>
           </form>
+          <Link className={styles.registerLink} to="/resetByEmail">Forgotten password?</Link>
           <Link className={styles.registerLink} to="/register">
             Don't have an account, register now!
           </Link>
@@ -74,4 +83,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
   error: state.error
 });
-export default connect(mapStateToProps, { loginUser })(LoginPage);
+export default connect(mapStateToProps, { loginUser, clearErrors })(LoginPage);

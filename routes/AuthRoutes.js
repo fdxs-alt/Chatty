@@ -20,6 +20,10 @@ router.post("/register", (req, res) => {
     return res
       .status(400)
       .json({ error: "Nick must be at least 4 characters" });
+      if (nick.length > 8)
+    return res
+      .status(400)
+      .json({ error: "Nick can't be longer than 8 characters" });
   if (!emailValidator.validate(email))
     return res.status(400).json({ error: "Email adress doesn't exist" });
   User.findOne({ nick }).then(user => {

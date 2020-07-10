@@ -137,6 +137,10 @@ router.post(
       return res
         .status(400)
         .json({ error: "Nickname must be at least 4 characters" });
+    if (nick.length > 8)
+      return res
+        .status(400)
+        .json({ error: "Nick can't be longer than 8 characters" });
     User.findOne({ nick }).then(user => {
       if (user)
         return res

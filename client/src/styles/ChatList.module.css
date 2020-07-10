@@ -49,9 +49,8 @@
 .modalButton {
   border: none;
   cursor: pointer;
-  padding: 0.4rem;
-  background-color: white;
-  font-size: 2rem;
+  background-color: inherit;
+  font-size: 1.6rem;
   color: black;
   align-self: flex-end;
   cursor: pointer;
@@ -62,8 +61,7 @@
 }
 .modalButton:focus {
   outline: none;
-  border-radius: 1.2rem;
-  border: 1px solid white;
+  color: red;
 }
 @media (max-width: 1000px) {
   .chatlist {

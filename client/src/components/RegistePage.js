@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import registerImage from "../images/5551.jpg";
 import styles from "../styles/RegisterPage.module.css";
 import { connect } from "react-redux";
 import { registerUser } from "../redux/actions/AuthActions";
-const RegistePage = ({ registerUser }) => {
+import { clearErrors } from "../redux/actions/ErrorActions";
+
+const RegistePage = ({ registerUser, error, clearErrors }) => {
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+  useEffect(() => {
+    clearErrors();
+  }, [clearErrors]);
   const handleSubmit = e => {
     e.preventDefault();
     const newUser = {
@@ -19,6 +24,7 @@ const RegistePage = ({ registerUser }) => {
     setEmail("");
     setNick("");
     setPassword("");
+    clearErrors();
   };
   return (
     <div className={styles.container}>
@@ -47,6 +53,9 @@ const RegistePage = ({ registerUser }) => {
             placeholder="Your password"
             onChange={e => setPassword(e.target.value)}
           />
+          {error.message && (
+            <h2 className={styles.error}>{error.message.error}</h2>
+          )}
           <button className={styles.registerButton} onClick={handleSubmit}>
             Register
           </button>
@@ -73,6 +82,9 @@ const RegistePage = ({ registerUser }) => {
   );
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  error: state.error
 });
-export default connect(mapStateToProps, { registerUser })(RegistePage);
+export default connect(mapStateToProps, { registerUser, clearErrors })(
+  RegistePage
+);

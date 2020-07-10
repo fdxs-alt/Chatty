@@ -1,7 +1,7 @@
 import { GET_ERRORS, CLEAN_ERRORS } from "../actions/types";
 
 const initialState = {
-  message: {},
+  message: null,
   status: null
 };  
 
@@ -15,7 +15,7 @@ export default (state = initialState, action) => {
     }
     case CLEAN_ERRORS: {
         return {
-            message: {},
+            message: null,
             status: null
         }
     }

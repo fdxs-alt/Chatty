@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "../styles/Menu.module.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import { logout } from "../redux/actions/AuthActions";
 import Modal from "./Modal";
 import { updateChatroom } from "../redux/actions/RoomActions";
-const Menu = ({ logout, auth, updateChatroom }) => {
+import { clearErrors } from "../redux/actions/ErrorActions";
+const Menu = ({ logout, auth, updateChatroom, error, clearErrors }) => {
   const [open, setOpen] = useState(false);
   const [roomName, setRoomName] = useState("");
+  useEffect(() => {
+    clearErrors();
+  }, [open, clearErrors]);
   const handleClick = e => {
     e.preventDefault();
     updateChatroom(roomName, auth.user.nick, auth.token, auth.user.email);
-    setOpen(false);
     setRoomName("");
+    clearErrors();
   };
   return (
     <nav className={styles.navbar}>
@@ -35,6 +39,7 @@ const Menu = ({ logout, auth, updateChatroom }) => {
               onChange={e => setRoomName(e.target.value)}
               placeholder="Type name of your room here"
             />
+            {error.message && <h2 className={styles.error}>{error.message.error}</h2>}
             <button
               className={styles.createRoomButton}
               onClick={e => handleClick(e)}
@@ -58,6 +63,11 @@ const Menu = ({ logout, auth, updateChatroom }) => {
   );
 };
 const mapStateToProps = state => ({
-  auth: state.auth
+  auth: state.auth,
+  error: state.error
 });
-export default connect(mapStateToProps, { logout, updateChatroom })(Menu);
+export default connect(mapStateToProps, {
+  logout,
+  updateChatroom,
+  clearErrors
+})(Menu);

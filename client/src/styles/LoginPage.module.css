@@ -90,7 +90,7 @@ body {
   color: rgba(255, 255, 255, 0.37);
 }
 .loginButton {
-  margin-top: 5rem;
+  margin-top: 3rem;
   width: 80%;
   align-self: center;
   color: white;
@@ -115,6 +115,11 @@ body {
   color: var(--input-style);
   background-color: white;
   transition: 200ms;
+}
+.error {
+  margin-top: 0.6rem;
+  text-align: center;
+  color: red;
 }
 .loginButton:focus {
   outline: none;

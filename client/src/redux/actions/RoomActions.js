@@ -22,7 +22,6 @@ export const getRooms = token => dispatch => {
 export const deleteRoom = (token, id) => dispatch => {
   Axios.delete(`/user/deleteRoom/${id}`, setConfig(token))
     .then(res => {
-      console.log(res);
       dispatch({ type: DELETE_ROOM, payload: id });
     })
     .catch(err => {
@@ -37,7 +36,7 @@ export const updateChatroom = (roomName, user, token, email) => dispatch => {
   };
   Axios.post("/user/addRoom", roomData, setConfig(token))
     .then(res => {
-      console.log(res.data);
+      
       dispatch({ type: ADD_ROOM, payload: res.data });
     })
     .catch(err => {
