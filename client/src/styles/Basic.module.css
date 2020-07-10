@@ -26,3 +26,28 @@
   border-radius: 1.5rem;
   border: 2px solid black;
 }
+@media (max-width: 1000px) {
+  .messageInput {
+    width: 80%;
+    align-self: center;
+  }
+  .messageButton  {
+    width: 20%;
+  }
+}
+@media (max-width: 450px) {
+  .messageInput {
+    width: 90%;
+    align-self: center;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  .messageButton  {
+    width: 90%;
+    margin-top: 0.6rem;
+    margin-left: 0;
+    padding: 0.5rem;
+    align-self: center;
+    font-size: 0.8rem;
+  }
+}

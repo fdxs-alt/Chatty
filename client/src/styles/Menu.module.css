@@ -79,7 +79,6 @@
   outline: none;
   border-radius: 1.2rem;
   border: 1px solid white;
-  
 }
 .modalInput {
   width: 60%;
@@ -134,11 +133,11 @@
   .menu {
     flex-direction: row;
     justify-content: space-evenly;
-    align-content: center;
+    align-items: center;
   }
   .menu li {
     margin-bottom: 0;
-    padding: 0 .4rem;
+    padding: 0 0.4rem;
   }
   .logo {
     display: none;
@@ -146,9 +145,10 @@
   .nick {
     margin-left: 1rem;
     margin-bottom: 0;
-    font-size: 3.2rem;
-  } 
+    font-size: 2.4rem;
+  }
   .modalButton {
+    font-size: 1.4rem;
     padding: 0;
   }
   .logout {
@@ -159,7 +159,6 @@
     font-size: 1.4rem;
     color: white;
     font-family: inherit;
-    width: 50%;
   }
   .logout:hover {
     color: red;
@@ -176,5 +175,47 @@
   .modalInput {
     width: 80%;
   }
-  
+}
+@media (max-width: 400px) {
+  .navbar {
+    height: 100px;
+    
+  }
+  .logo {
+    display: none;
+  }
+  .nick {
+    font-size: 1.8rem;
+  }
+  .modalButton {
+    font-size: 0.8rem;
+    padding: 0;
+  }
+  .logout {
+    align-self: center;
+    font-size: 0.8rem;
+  }
+  .logout:hover {
+    color: red;
+  }
+  .logout:focus {
+    outline: none;
+    border-radius: 1.2rem;
+    border: 1px solid white;
+  }
+  .createRoomButton {
+    font-size: 0.8rem;
+    padding: 0.8rem;
+  }
+  .modalInput::placeholder {
+    font-size: 1rem;
+    padding: 0.4rem;
+    width: 95%;
+  }
+  .link {
+    font-size: 0.8rem;
+  }
+  .create {
+    font-size: 1.4rem;
+  }
 }

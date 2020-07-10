@@ -151,8 +151,8 @@ router.post("/resend", (req, res) => {
       return res
         .status(400)
         .json({ error: "Account has already been verified" });
-    const token = jwt.sign(newUser.email, process.env.secret);
-    sendEmail(token, newUser.email).then(() => {
+    const token = jwt.sign(user.email, process.env.secret);
+    sendEmail(token, user.email).then(() => {
       res.status(200).json({ message: "Email send sucessfully" });
     });
   });

@@ -7,7 +7,6 @@
 body {
   font-family: "Raleway", sans-serif;
   width: 100%;
-  background-color: rgba(179, 172, 172, 0.048);
 }
 .container {
   width: 100%;
@@ -34,12 +33,26 @@ body {
 .sendingCompontents {
   width: 100%;
   display: flex;
-  padding: 0.8rem;
+  margin-top: 0.5rem;
   justify-content: space-between;
 }
 @media (max-width: 1000px) {
   .container {
     flex-direction: column;
    
+  }
+  .content {
+    padding: 2rem;
+  }
+}
+@media (max-width: 450px) {
+  .container {
+    flex-direction: column;
+  }
+  .sendingCompontents {
+    flex-direction: column;
+  }
+  .content {
+    padding: 2rem;
   }
 }
