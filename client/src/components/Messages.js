@@ -13,7 +13,7 @@ const Messages = ({ messages, canLoad, handleLoadMore }) => {
   });
   const button = css({
     width: "100%",
-    fontSize: "1.5rem",
+    fontSize: "1.2rem",
     margin: "0.4rem 0",
     display: "flex",
     justifyContent: "center",
