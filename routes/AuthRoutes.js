@@ -104,6 +104,7 @@ router.post("/login", (req, res) => {
 router.post("/recoverpassword", (req, res) => {
   const { email } = req.body;
   User.findOne({ email }).then(user => {
+    
     if (!user) return res.status(400).json({ error: "There's no such account" });
     const token = jwt.sign({ email }, process.env.secret, {
       expiresIn: 600
