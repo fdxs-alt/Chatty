@@ -8,15 +8,17 @@ const ResetByEmail = () => {
   const [error, setError] = useState("");
   const sendEmail = e => {
     e.preventDefault();
+    const mail = {
+      email
+    }
     axios
-      .post("/auth/recoverpassword", email)
+      .post("/auth/recoverpassword", mail)
       .then(res => setMessage(res.data.message))
       .catch(error => setError(error.response.data.error));
       setEmail('')
       setMessage('')
-      setError('s')
+      setError('')
   };
-  console.log(error)
   return (
     <div className={styles.changePassword}>
       <form>

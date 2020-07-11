@@ -109,11 +109,11 @@
     font-size: 1.6rem;
   }
   .changePasswordButton {
-    width: 80%;
+    width: 40%;
     font-size: 0.8rem;
   }
   .changeEmail {
-    width: 80%;
+    width: 40%;
     font-size: 0.8rem;
     
   }
@@ -122,5 +122,13 @@
   }
   .changePassword label {
     text-align: center;
+  }
+}
+@media (max-width: 450px) {
+  .changePasswordButton {
+    width: 80%;
+  }
+  .changeEmail {
+    width: 80%;
   }
 }
