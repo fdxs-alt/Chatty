@@ -36,7 +36,7 @@ const Confirm = () => {
         setLoading(false);
       });
   }, [token]);
-  if (!token) return <Redirect to="/login" />;
+  if (!token) return <Redirect to="/" />;
   if (loading) return <Spinner loading={loading} size={300} />;
   else
     return (
@@ -45,7 +45,7 @@ const Confirm = () => {
           <div className={styles.success}>
             <img src={successIlu} alt="success-ilu" />
             <h1>{message.message}</h1>
-            <Link className={styles.link} to="/login">
+            <Link className={styles.link} to="/">
               Login in now!
             </Link>
           </div>
@@ -53,7 +53,7 @@ const Confirm = () => {
           <form className={styles.error}>
             <img src={errorIlu} alt="error-ilu" />
             <h1>{error.error}</h1>
-            <Link className={styles.link} to="/login">
+            <Link className={styles.link} to="/">
               Log in
             </Link>
             {!error.confirmed && (

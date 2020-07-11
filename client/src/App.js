@@ -19,7 +19,7 @@ const App = ({ getUser }) => {
   return (
     <Router>
       <Switch>
-        <Route path="/login" component={LoginPage} />
+        <Route path="/" component={LoginPage} exact/>
         <Route path="/register" component={RegisterPage} />
         <PrivateRoute path="/dashboard" component={Dashboard} />
         <PrivateRoute path="/chat" component={ChatRoom} />

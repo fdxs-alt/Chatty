@@ -60,7 +60,7 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
             Register
           </button>
         </form>
-        <Link className={styles.loginLink} to="/login">
+        <Link className={styles.loginLink} to="/">
           Already have account, log in
         </Link>
         <div className="icons">

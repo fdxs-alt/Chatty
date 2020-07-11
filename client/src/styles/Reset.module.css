@@ -1,13 +1,17 @@
 .changePassword {
-  background-color: rgba(197, 193, 193, 0.61);
+  background-color: rgba(179, 172, 172, 0.048);
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   padding: 2.4rem;
 }
 .changePassword form {
+  -webkit-box-shadow: 15px 10px 133px -47px rgba(0, 71, 173, 0.59);
+  -moz-box-shadow: 15px 10px 133px -47px rgba(0, 71, 173, 0.59);
+  box-shadow: 15px 10px 133px -47px rgba(0, 71, 173, 0.59);
+  border-radius: 1.5rem;
   width: 30%;
   background-color: white;
   padding: 2.5rem;
@@ -18,12 +22,15 @@
   align-items: center;
 }
 .changePassword form h1 {
+  text-align: center;
   margin: 1.2rem 0;
 }
 .error {
+  text-align: center;
   color: red;
 }
 .success {
+  text-align: center;
   color: rgb(36, 170, 36);
 }
 .passwordInput {
@@ -57,7 +64,7 @@
 }
 .link {
   width: 50%;
-  margin: 1.5rem 0;
+  margin: 0.4rem 0;
   display: flex;
   justify-content: center;
   text-decoration: none;
@@ -72,10 +79,48 @@
   outline: none;
   border: 2px solid red;
 }
+.changeEmail {
+  width: 50%;
+  padding: 0.6rem;
+  font-size: 1.2rem;
+  color: white;
+  background-color: #0047ad;
+  border-radius: 1.5rem;
+  border: 2px solid black;
+  margin: 1.2rem 0;
+  cursor: pointer;
+}
+.changeEmail:focus {
+  outline: none;
+  border: 2px solid red;
+}
 .link:focus {
   outline: none;
   font-weight: 700;
 }
 .changePasswordButton:disabled {
   cursor: not-allowed;
+}
+@media (max-width: 1000px) {
+  .changePassword form {
+    width: 100%;
+  }
+  .changePassword form h1 {
+    font-size: 1.6rem;
+  }
+  .changePasswordButton {
+    width: 80%;
+    font-size: 0.8rem;
+  }
+  .changeEmail {
+    width: 80%;
+    font-size: 0.8rem;
+    
+  }
+  .passwordInput::placeholder {
+    font-size: 0.8rem;
+  }
+  .changePassword label {
+    text-align: center;
+  }
 }

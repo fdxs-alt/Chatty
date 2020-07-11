@@ -14,7 +14,7 @@ const ResetPassword = () => {
     e.preventDefault();
     setMessage("");
     setError("");
-    if (!token) return <Redirect to="/login" />;
+    if (!token) return <Redirect to="/" />;
     const data = {
       password,
       confirmPassword
@@ -26,7 +26,7 @@ const ResetPassword = () => {
     setPassword("");
     setConfirmPassword("");
   };
-  if (!token) return <Redirect to="/login" />;
+  if (!token) return <Redirect to="/" />;
   else
     return (
       <div className={styles.changePassword}>
@@ -60,7 +60,7 @@ const ResetPassword = () => {
             Change password
           </button>
 
-          <Link className={styles.link} to="/login">
+          <Link className={styles.link} to="/">
             Log in now!
           </Link>
         </form>

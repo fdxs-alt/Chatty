@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, auth, ...rest }) => {
         if (auth.isLoading) {
           return <Spinner loading={auth.isLoading} size={300} />;
         } else if (!auth.isAuthenticated || auth.isAuthenticated === null) {
-          return <Redirect to="/login" />;
+          return <Redirect to="/" />;
         } else {
           return <Component {...props} />;
         }
