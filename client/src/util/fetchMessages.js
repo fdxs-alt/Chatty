@@ -16,7 +16,7 @@ export const fetchMessages = (
     })
     .catch(err => console.log(err));
 };
-export const updateChatroom = (roomName, user, token ) => {
+export const updateChatroom = (roomName, user, token) => {
   const roomData = {
     chatroom: roomName,
     user

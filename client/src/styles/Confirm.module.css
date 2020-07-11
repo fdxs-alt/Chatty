@@ -79,3 +79,20 @@
   border: 1px solid #f3542d;
   outline: none;
 }
+@media (max-width: 1000px) {
+  .container {
+    padding: 2.2rem;
+  }
+  .error h1 {
+    font-size: 1.5rem;
+    margin-bottom: 0.9rem;
+  }
+  .error button {
+    margin-bottom: 0.4rem;
+    width: 60%;
+    padding: 0.4rem;
+  }
+  .emailInput {
+    width: 80%;
+  }
+}

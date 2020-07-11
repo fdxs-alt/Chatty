@@ -17,7 +17,6 @@ const ChatRoom = ({ auth }) => {
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(0);
   const [canLoad, setCanLoad] = useState(true);
-
   useEffect(() => {
     socket = io.connect("http://localhost:5000", {
       query: `token=${auth.token.split(" ")[1]}`

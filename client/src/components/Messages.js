@@ -8,7 +8,7 @@ const Messages = ({ messages, canLoad, handleLoadMore }) => {
     width: "100%",
     display: "flex",
     flexDirection: "column",
-    height: "700px",
+    height: "70vh",
     padding: "0.2rem"
   });
   const button = css({
