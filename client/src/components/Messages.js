@@ -9,7 +9,7 @@ const Messages = ({ messages, canLoad, handleLoadMore }) => {
     display: "flex",
     flexDirection: "column",
     height: "70vh",
-    padding: "0.2rem"
+    padding: "0.2rem",
   });
   const button = css({
     width: "100%",
@@ -22,8 +22,8 @@ const Messages = ({ messages, canLoad, handleLoadMore }) => {
     padding: "0.4rem",
     cursor: "pointer",
     ":hover": {
-      opacity: "1"
-    }
+      opacity: "1",
+    },
   });
   return (
     <ScrollToBottom className={style}>
