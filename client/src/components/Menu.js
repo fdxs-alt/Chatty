@@ -12,7 +12,7 @@ const Menu = ({ logout, auth, updateChatroom, error, clearErrors }) => {
   useEffect(() => {
     clearErrors();
   }, [open, clearErrors]);
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.preventDefault();
     updateChatroom(roomName, auth.user.nick, auth.token, auth.user.email);
     setRoomName("");
@@ -32,23 +32,27 @@ const Menu = ({ logout, auth, updateChatroom, error, clearErrors }) => {
         <li>
           <Modal open={open} setOpen={setOpen}>
             <h1 className={styles.create}>Create your own room!</h1>
-            <input
-              type="text"
-              value={roomName}
-              className={styles.modalInput}
-              onChange={e => setRoomName(e.target.value)}
-              placeholder="Type name of your room here"
-            />
-            {error.message && <h2 className={styles.error}>{error.message.error}</h2>}
-            <button
-              className={styles.createRoomButton}
-              onClick={e => handleClick(e)}
-              onKeyPress={e => {
-                if (e.key === "Enter") handleClick(e);
-              }}
-            >
-              Create new chat
-            </button>
+            <form style={{ width: "100%" }}>
+              <input
+                type="text"
+                value={roomName}
+                className={styles.modalInput}
+                onChange={(e) => setRoomName(e.target.value)}
+                placeholder="Type name of your room here"
+              />
+              {error.message && (
+                <h2 className={styles.error}>{error.message.error}</h2>
+              )}
+              <button
+                className={styles.createRoomButton}
+                onClick={(e) => handleClick(e)}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") handleClick(e);
+                }}
+              >
+                Create new chat
+              </button>
+            </form>
           </Modal>
           <button className={styles.modalButton} onClick={() => setOpen(true)}>
             Create
@@ -62,12 +66,12 @@ const Menu = ({ logout, auth, updateChatroom, error, clearErrors }) => {
     </nav>
   );
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  error: state.error
+  error: state.error,
 });
 export default connect(mapStateToProps, {
   logout,
   updateChatroom,
-  clearErrors
+  clearErrors,
 })(Menu);

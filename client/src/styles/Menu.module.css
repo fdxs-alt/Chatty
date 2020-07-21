@@ -49,8 +49,7 @@
 }
 .link:focus {
   outline: none;
-  border-radius: 1.2rem;
-  border: 1px solid white;
+  color: red;
 }
 .logout {
   margin-top: 5rem;
@@ -62,6 +61,11 @@
   color: red;
   cursor: pointer;
   font-size: 1.1rem;
+}
+.logout:hover {
+  color: white;
+  background-color: red;
+  transition: 300ms;
 }
 .modalButton {
   border: none;
@@ -77,8 +81,7 @@
 }
 .modalButton:focus {
   outline: none;
-  border-radius: 1.2rem;
-  border: 1px solid white;
+  color: red;
 }
 .modalInput {
   width: 60%;
@@ -87,7 +90,7 @@
   border-radius: 1.5rem;
   border: 1px solid black;
   font-size: 1.3rem;
-  margin-bottom: 3rem;
+  margin: 2rem 0;
 }
 .modalInput:focus {
   outline: none;
@@ -104,7 +107,7 @@
   border: 1px solid var(--button-color);
   background-color: var(--image-font-color);
   border-radius: 1.5rem;
-  padding: 1.2rem 2rem;
+  padding: 0.8rem 2rem;
   color: white;
   cursor: pointer;
   font-size: 1.1rem;
@@ -161,12 +164,13 @@
     font-family: inherit;
   }
   .logout:hover {
+    background-color: var(--background-color-main);
     color: red;
   }
   .logout:focus {
     outline: none;
-    border-radius: 1.2rem;
-    border: 1px solid white;
+    border: none;
+    color: red;
   }
   .createRoomButton {
     width: 60%;
@@ -179,7 +183,6 @@
 @media (max-width: 450px) {
   .navbar {
     height: 100px;
-    
   }
   .logo {
     display: none;

@@ -5,7 +5,7 @@
   margin-bottom: 0.5rem;
 }
 .messageWrapper p {
-  overflow: hidden;
+  word-break: break-all;
 }
 .message {
   width: 30%;
