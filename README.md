@@ -1,6 +1,6 @@
 ## Chatty
 
-App build with Node/Express on backend and React + Redux on frontend
+####App build with Node/Express on backend and React + Redux on frontend
 ---
 ##### Backend: 
 1. Express
@@ -28,4 +28,5 @@ App build with Node/Express on backend and React + Redux on frontend
 7. Connecting to chatroom
 8. Go through pagineted message history
 9. Deleting chatrooms
+10. Sending messages
 ---
