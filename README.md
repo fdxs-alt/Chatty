@@ -1,6 +1,6 @@
 ## Chatty
 
-####App build with Node/Express on backend and React + Redux on frontend
+#### App build with Node/Express on backend and React + Redux on frontend
 ---
 ##### Backend: 
 1. Express
