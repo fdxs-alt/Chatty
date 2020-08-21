@@ -24,9 +24,9 @@
 3. Confirm given email by email sent via Nodemailer
 4. Reset password
 5. Edit some options
-6. Creating new chatroom
-7. Connecting to chatroom
+6. Create new chatroom
+7. Connect to chatroom
 8. Go through pagineted message history
-9. Deleting chatrooms
-10. Sending messages
+9. Delete chatrooms
+10. Send messages
 ---
