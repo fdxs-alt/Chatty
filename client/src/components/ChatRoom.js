@@ -18,8 +18,8 @@ const ChatRoom = ({ auth }) => {
   const [page, setPage] = useState(0);
   const [canLoad, setCanLoad] = useState(true);
   useEffect(() => {
-    socket = io.connect("http://localhost:5000", {
-      query: `token=${auth.token.split(" ")[1]}`
+    socket = io.connect("https://chatty.herokuapp.com/", {
+      query: `token=${auth.token.split(" ")[1]}`,
     });
     const { room, name } = queryString.parse(window.location.search);
     setRoom(room);
@@ -27,7 +27,7 @@ const ChatRoom = ({ auth }) => {
     setLoading(true);
 
     fetchMessages(page, room, auth.token, setLoading, setMessages, setCanLoad);
-    setPage(oldPage => oldPage + 1);
+    setPage((oldPage) => oldPage + 1);
     socket.emit("join", { name, room }, () => {});
     return () => {
       socket.emit("disconnect");
@@ -36,12 +36,12 @@ const ChatRoom = ({ auth }) => {
   }, []);
 
   useEffect(() => {
-    socket.on("message", message => {
-      setMessages(oldValue => [...oldValue, message]);
+    socket.on("message", (message) => {
+      setMessages((oldValue) => [...oldValue, message]);
       messages.sort();
     });
   }, [setMessages]);
-  const handleClick = e => {
+  const handleClick = (e) => {
     e.preventDefault();
     if (message)
       socket.emit(
@@ -56,7 +56,7 @@ const ChatRoom = ({ auth }) => {
       );
   };
   const handleLoadMore = () => {
-    setPage(oldPage => oldPage + 1);
+    setPage((oldPage) => oldPage + 1);
     fetchMessages(
       page,
       roomName,
@@ -87,7 +87,7 @@ const ChatRoom = ({ auth }) => {
     );
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 export default connect(mapStateToProps, null)(ChatRoom);
