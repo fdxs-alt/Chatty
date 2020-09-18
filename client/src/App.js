@@ -18,21 +18,21 @@ const App = ({ getUser, auth }) => {
   }, [getUser]);
 
   if (auth.isLoading) return <Spinner loading={auth.isLoading} size={300} />;
-
-  return (
-    <Router>
-      <Switch>
-        <Route path="/" component={LoginPage} exact />
-        <Route path="/register" component={RegisterPage} />
-        <PrivateRoute path="/dashboard" component={Dashboard} />
-        <PrivateRoute path="/chat" component={ChatRoom} />
-        <Route path="/confirm" component={Confirm} />
-        <Route path="/reset" component={ResetPassword} />
-        <Route path="/resetByEmail" component={ResetByEmail} />
-        <PrivateRoute path="/options" component={Options} />
-      </Switch>
-    </Router>
-  );
+  else
+    return (
+      <Router>
+        <Switch>
+          <Route path="/" component={LoginPage} exact />
+          <Route path="/register" component={RegisterPage} exact />
+          <PrivateRoute path="/dashboard" component={Dashboard} exact />
+          <PrivateRoute path="/chat" component={ChatRoom} />
+          <Route path="/confirm" component={Confirm} />
+          <Route path="/reset" component={ResetPassword} />
+          <Route path="/resetByEmail" component={ResetByEmail} />
+          <PrivateRoute path="/options" component={Options} />
+        </Switch>
+      </Router>
+    );
 };
 const mapStateToProps = (state) => ({
   auth: state.auth,

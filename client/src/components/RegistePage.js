@@ -13,12 +13,12 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
   useEffect(() => {
     clearErrors();
   }, [clearErrors]);
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const newUser = {
       email,
       password,
-      nick
+      nick,
     };
     registerUser(newUser);
     setEmail("");
@@ -37,21 +37,21 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
             value={nick}
             type="email"
             placeholder="Your nick"
-            onChange={e => setNick(e.target.value)}
+            onChange={(e) => setNick(e.target.value)}
           />
           <label htmlFor="email">Email</label>
           <input
             value={email}
             type="email"
             placeholder="Your email"
-            onChange={e => setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <label htmlFor="password">Password</label>
           <input
             value={password}
             type="password"
             placeholder="Your password"
-            onChange={e => setPassword(e.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
           />
           {error.message && (
             <h2 className={styles.error}>{error.message.error}</h2>
@@ -71,8 +71,8 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
       <div className={styles.image}>
         <h1 className={styles.logo}>Chatty</h1>
         <img src={registerImage} alt="chat" />
-        <h2>Join our team right now!</h2>
-        <p>
+        <h2 style={{ textAlign: "center" }}>Join our team right now!</h2>
+        <p style={{ textAlign: "center" }}>
           Great user experience, Lorem ipsum, dolor sit amet consectetur
           adipisicing elit. Repellendus nostrum laboriosam optio aperiam earum,
           praesentium excepturi adipisci architecto. Iste, sunt?
@@ -81,9 +81,9 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
     </div>
   );
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  error: state.error
+  error: state.error,
 });
 export default connect(mapStateToProps, { registerUser, clearErrors })(
   RegistePage
