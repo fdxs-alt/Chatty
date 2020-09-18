@@ -15,7 +15,7 @@ import Options from "./components/Options";
 const App = ({ getUser, auth }) => {
   useEffect(() => {
     getUser();
-  }, []);
+  }, [getUser]);
 
   if (auth.isLoading) return <Spinner loading={auth.isLoading} size={300} />;
   else
