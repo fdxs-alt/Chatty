@@ -20,35 +20,36 @@ router.post("/register", (req, res) => {
     return res
       .status(400)
       .json({ error: "Nick must be at least 4 characters" });
-      if (nick.length > 8)
+  if (nick.length > 8)
     return res
       .status(400)
       .json({ error: "Nick can't be longer than 8 characters" });
   if (!emailValidator.validate(email))
     return res.status(400).json({ error: "Email adress doesn't exist" });
-  User.findOne({ nick }).then(user => {
+  User.findOne({ nick }).then((user) => {
     if (user) return res.status(400).json({ error: "Nick is already taken" });
     User.findOne({ email })
-      .then(user => {
+      .then((user) => {
         if (user) return res.status(400).json({ error: "User already exists" });
         const newUser = new User({
           nick,
           email,
-          password
+          password,
         });
 
         newUser
           .save()
           .then(() => {
             const token = jwt.sign(newUser.email, process.env.secret);
-            sendEmail(token, newUser.email);
-            res
-              .status(200)
-              .json({ message: "User's been registered sucessfully" });
+            sendEmail(token, newUser.email).then(() =>
+              res
+                .status(200)
+                .json({ message: "User's been registered sucessfully" })
+            );
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   });
 });
 router.post("/confirm/:token", (req, res) => {
@@ -60,11 +61,11 @@ router.post("/confirm/:token", (req, res) => {
     return res.status(400).json({ error: "You can't verify account now" });
   }
   User.findOne({ email: decoded })
-    .then(user => {
+    .then((user) => {
       if (user.confirmed)
         return res.status(400).json({
           confirmed: true,
-          error: "Your account has already been confirmed"
+          error: "Your account has already been confirmed",
         });
       User.findOneAndUpdate(
         { email: decoded },
@@ -75,21 +76,20 @@ router.post("/confirm/:token", (req, res) => {
         }
       );
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 router.post("/login", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password)
     return res.status(401).json({ error: "Fill all cridentials" });
   User.findOne({ email })
-    .then(user => {
+    .then((user) => {
       if (!user)
         return res
           .status(401)
           .json({ error: "Password or email doesn't match" });
-      if (!user.confirmed)
-        return res.status(401).json({ error: "Confirm your email first!" });
-      user.validatePassword(password).then(isMatch => {
+
+      user.validatePassword(password).then((isMatch) => {
         if (!isMatch)
           return res
             .status(400)
@@ -99,17 +99,17 @@ router.post("/login", (req, res) => {
           .json({ message: "You're logged in", data: user.toAuthJwt() });
       });
     })
-    .catch(error => console.log(error));
+    .catch((error) => console.log(error));
 });
 router.post("/recoverpassword", (req, res) => {
   const { email } = req.body;
-  User.findOne({ email }).then(user => {
-    
-    if (!user) return res.status(400).json({ error: "There's no such account" });
+  User.findOne({ email }).then((user) => {
+    if (!user)
+      return res.status(400).json({ error: "There's no such account" });
     const token = jwt.sign({ email }, process.env.secret, {
-      expiresIn: 600
+      expiresIn: 600,
     });
-    resetPassword(token, user.email).catch(error =>
+    resetPassword(token, user.email).catch((error) =>
       res.status(500).json({ error })
     );
     res
@@ -146,7 +146,7 @@ router.post("/reset/:token", async (req, res) => {
 });
 router.post("/resend", (req, res) => {
   const { email } = req.body;
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     if (!user) return res.status(400).json({ error: "Can't verfiy user" });
     if (user.confirmed)
       return res

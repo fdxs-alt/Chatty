@@ -66,7 +66,7 @@ const ChatRoom = ({ auth }) => {
       setCanLoad
     );
   };
-  if (loading || auth.isLoading || auth.isLoading == null)
+  if (loading || auth.isLoading)
     return <Spinner loading={loading} size={300} />;
   else
     return (

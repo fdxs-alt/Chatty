@@ -29,7 +29,7 @@ router.get(
       const user = await User.findById(decoded.sub).select("-password");
       res.status(200).json(user);
     } catch (err) {
-      res.status(401).json({ error: "there was an error" });
+      res.status(401).json({ error: "There was an error" });
     }
   }
 );
