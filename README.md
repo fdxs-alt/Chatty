@@ -21,7 +21,7 @@
 ##### App allows user to: 
 1. Register
 2. Login
-3. Confirm given email by email sent via Nodemailer
+3. Confirm given email by email sent via Nodemailer (doesn't work properly)
 4. Reset password
 5. Edit some options
 6. Create new chatroom
