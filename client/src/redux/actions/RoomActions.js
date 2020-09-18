@@ -10,7 +10,6 @@ import Axios from "axios";
 
 export const getRooms = token => dispatch => {
   dispatch({ type: LOAD_ROOMS });
-
   Axios.get("/user/chatrooms", setConfig(token))
     .then(res => {
       dispatch({ type: GET_ROOMS, payload: res.data });

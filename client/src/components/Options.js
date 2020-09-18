@@ -16,13 +16,13 @@ const Options = ({ auth, logout, getUser }) => {
   const [nicknameChangeMessage, setNicknameChangeMessage] = useState("");
   const [nicknameChangeError, setNicknameChangeError] = useState("");
 
-  const handlePasswordChange = e => {
+  const handlePasswordChange = (e) => {
     setPasswordChangeError("");
     setPasswordChangeMessage("");
     e.preventDefault();
     const data = {
       password,
-      confirmPassword
+      confirmPassword,
     };
     axios
       .post(
@@ -30,32 +30,32 @@ const Options = ({ auth, logout, getUser }) => {
         data,
         setConfig(auth.token)
       )
-      .then(res => {
+      .then((res) => {
         setPasswordChangeMessage(res.data.message);
       })
-      .catch(error => setPasswordChangeError(error.response.data.error));
+      .catch((error) => setPasswordChangeError(error.response.data.error));
     setConfirmPassword("");
     setPassword("");
   };
-  const handleDelete = e => {
+  const handleDelete = (e) => {
     axios
       .delete(`/user/deleteAccount/${auth.user._id}`, setConfig(auth.token))
       .then(() => logout())
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
-  const handleNickChange = e => {
+  const handleNickChange = (e) => {
     e.preventDefault();
     setNicknameChangeError("");
     setNicknameChangeMessage("");
     const data = {
-      nick: nickname
+      nick: nickname,
     };
     axios
       .post(`/user/changeNick/${auth.user._id}`, data, setConfig(auth.token))
-      .then(res => {
+      .then((res) => {
         setNicknameChangeMessage(res.data.message);
       })
-      .catch(error => setNicknameChangeError(error.response.data.error));
+      .catch((error) => setNicknameChangeError(error.response.data.error));
     setNickname("");
   };
   return (
@@ -71,20 +71,20 @@ const Options = ({ auth, logout, getUser }) => {
               value={password}
               type="password"
               placeholder="Password..."
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <label htmlFor="nickname">Confirmation Password</label>
             <input
               value={confirmPassword}
               type="password"
               placeholder="Confirmation Password..."
-              onChange={e => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
             <h4 className={styles.success}>{passwordChangeMessage}</h4>
             <h4 className={styles.error}>{passwordChangeError}</h4>
 
-            <button onClick={e => handlePasswordChange(e)}>Change now</button>
+            <button onClick={(e) => handlePasswordChange(e)}>Change now</button>
           </form>
           <form className={styles.formContainer}>
             <h2>Change Your nickname</h2>
@@ -93,27 +93,29 @@ const Options = ({ auth, logout, getUser }) => {
               value={nickname}
               type="text"
               placeholder="Nickname..."
-              onChange={e => setNickname(e.target.value)}
+              onChange={(e) => setNickname(e.target.value)}
             />
 
             <h4 className={styles.success}>{nicknameChangeMessage}</h4>
             <h4 className={styles.error}>{nicknameChangeError}</h4>
 
-            <button onClick={e => handleNickChange(e)}>Change nickname</button>
+            <button onClick={(e) => handleNickChange(e)}>
+              Change nickname
+            </button>
 
             <h2>Delete account</h2>
-            <button onClick={e => handleDelete(e)}>Delete</button>
+            <button onClick={(e) => handleDelete(e)}>Delete</button>
           </form>
           <Link className={styles.link} to="/dashboard">
             Back to dashboard
           </Link>
         </div>
-        <FontAwesomeIcon className={styles.imageContainer}icon={faCogs} />
+        <FontAwesomeIcon className={styles.imageContainer} icon={faCogs} />
       </div>
     </div>
   );
 };
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 export default connect(mapStateToProps, { logout, getUser })(Options);

@@ -23,10 +23,10 @@ app.use("/user", require("./routes/UserRoutes"));
 io.use(
   socketioJWT.authorize({
     secret: process.env.secret,
-    handshake: true
+    handshake: true,
   })
 );
-io.on("connection", socket => {
+io.on("connection", (socket) => {
   socket.on("join", ({ name, room }, callback) => {
     join(socket, name, room, callback);
     callback();
@@ -39,13 +39,21 @@ io.on("connection", socket => {
     socket.emit("message", {
       issuedBy: "admin",
       content: `${name} has left the room`,
-      date: moment().format("MMMM Do YYYY, h:mm:ss a")
+      date: moment().format("MMMM Do YYYY, h:mm:ss a"),
     });
   });
 });
 
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+}
+
 // listening
 const PORT = process.env.PORT || 5000;
+
 server.listen(PORT, () => {
   console.log(`App working on port ${PORT}`);
 });
