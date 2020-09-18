@@ -9,6 +9,7 @@ const connectDB = require("./utils/connectDatabase");
 const passport = require("passport");
 const join = require("./socket/join");
 const sendMessage = require("./socket/sendMessage");
+const path = require("path");
 dotenv.config({ path: "./.env" });
 require("./config/passport")(passport);
 
