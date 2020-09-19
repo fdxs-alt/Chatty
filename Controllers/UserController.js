@@ -106,26 +106,21 @@ const getPaginatedMessages = async (req, res, next) => {
 
   const page = parseInt(page_number);
 
-  try {
-    const chatroom = await ChatRoom.findOne({ name: roomName });
+  const chatroom = await ChatRoom.findOne({ name: roomName });
 
-    if (!chatroom)
-      return next(new HttpException(400, "Can't find such a room"));
+  if (!chatroom) return next(new HttpException(400, "Can't find such a room"));
 
-    const allMessages = chat.messages.slice(
-      chat.messages.length - (page + 1) * 10,
-      chat.messages.length - page * 10
+  const allMessages = chat.messages.slice(
+    chat.messages.length - (page + 1) * 10,
+    chat.messages.length - page * 10
+  );
+
+  if (allMessages) {
+    return res.status(200).json(allMessages);
+  } else {
+    return next(
+      new HttpException(400, "No items with the specified parameters")
     );
-
-    if (allMessages) {
-      return res.status(200).json(allMessages);
-    } else {
-      return next(
-        new HttpException(400, "No items with the specified parameters")
-      );
-    }
-  } catch (error) {
-    return next(new HttpException(500, error));
   }
 };
 
