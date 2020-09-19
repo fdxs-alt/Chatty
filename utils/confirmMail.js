@@ -2,15 +2,13 @@ const nodemailer = require("nodemailer");
 
 exports.sendEmail = async (jwt, email) => {
   try {
-    let testAccount = await nodemailer.createTestAccount();
-
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+    const transporter = nodemailer.createTransport({
+      host: "email-smtp.eu-central-1.amazonaws.com",
       port: 587,
-      secure: false,
+      secure: true,
       auth: {
         user: testAccount.user,
-        pass: testAccount.pass,
+        pass: testAccount.password,
       },
     });
 
@@ -22,7 +20,8 @@ exports.sendEmail = async (jwt, email) => {
       subject: "Confirm email",
       html: `Please click this email to confirm your password: <a href= "${url}">Activate your account now</a> `, // html body
     });
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
+
+    console.log(info);
   } catch (error) {
     console.log(error);
   }

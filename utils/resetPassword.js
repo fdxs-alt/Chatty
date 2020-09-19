@@ -4,15 +4,16 @@ exports.resetPassword = async (jwt, email) => {
   try {
     let testAccount = await nodemailer.createTestAccount();
 
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
+    const transporter = nodemailer.createTransport({
+      host: "email-smtp.eu-central-1.amazonaws.com",
       port: 587,
-      secure: false,
+      secure: true,
       auth: {
         user: testAccount.user,
-        pass: testAccount.pass,
+        pass: testAccount.password,
       },
     });
+
     const url = process.env.baseUrl + `/reset?token=${jwt}`;
 
     await transporter.sendMail({
