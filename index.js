@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(ErrorHandler.notFound);
+
 app.use(ErrorHandler.handleError);
 
 if (process.env.NODE_ENV === "production") {
