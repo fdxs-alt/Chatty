@@ -127,6 +127,7 @@ const getPaginatedMessages = async (req, res, next) => {
       );
     }
   } catch (error) {
+    console.log(error);
     return next(new HttpException(500, error));
   }
 };
