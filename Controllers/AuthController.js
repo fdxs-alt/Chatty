@@ -57,7 +57,7 @@ const register = async (req, res, next) => {
       .status(200)
       .json({ message: "User's been registered sucessfully" });
   } catch (error) {
-    return next(new HttpException(500, "Error occured"));
+    return next(new HttpException(500, error));
   }
 };
 
