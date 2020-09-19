@@ -4,7 +4,7 @@ const { sendEmail } = require("../utils/confirmMail");
 const emailValidator = require("email-validator");
 const bcrypt = require("bcryptjs");
 const { resetPassword } = require("../utils/resetPassword");
-const User = require("../models/ChatRoom");
+const User = require("../models/User");
 
 const register = async (req, res, next) => {
   try {
