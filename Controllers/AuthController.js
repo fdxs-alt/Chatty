@@ -34,7 +34,7 @@ const register = async (req, res, next) => {
     }
 
     const userWithNick = await User.findOne({ nick });
-    console.log(userWithNick);
+
     if (userWithNick) {
       return next(new HttpException(400, "Nick is already taken"));
     }
@@ -52,10 +52,6 @@ const register = async (req, res, next) => {
     });
 
     await newUser.save();
-
-    const token = jwt.sign(newUser.email, process.env.secret);
-
-    await sendEmail(token, newUser.email);
 
     return res
       .status(200)
