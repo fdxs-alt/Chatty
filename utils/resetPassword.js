@@ -2,15 +2,11 @@ const nodemailer = require("nodemailer");
 
 exports.resetPassword = async (jwt, email) => {
   try {
-    let testAccount = await nodemailer.createTestAccount();
-
     const transporter = nodemailer.createTransport({
-      host: "email-smtp.eu-central-1.amazonaws.com",
-      port: 587,
-      secure: true,
+      service: "gmail",
       auth: {
-        user: testAccount.user,
-        pass: testAccount.password,
+        user: process.env.email,
+        pass: process.env.password,
       },
     });
 
