@@ -109,7 +109,7 @@ const login = async (req, res, next) => {
       .status(200)
       .json({ message: "You're logged in", data: user.toAuthJwt() });
   } catch (error) {
-    return next(new HttpException(500, error));
+    return next(new HttpException(500, "An error occured"));
   }
 };
 const recoverPassword = async (req, res, next) => {

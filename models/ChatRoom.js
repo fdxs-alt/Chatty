@@ -3,12 +3,15 @@ const moment = require("moment");
 const ChatroomSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
   },
   founder: {
     type: String,
+    required: true,
   },
   users: {
     type: [String],
+    required: true,
   },
   messages: [
     {
