@@ -111,6 +111,9 @@ const getPaginatedMessages = async (req, res, next) => {
     if (!chatroom)
       return next(new HttpException(400, "Can't find such a room"));
 
+    if (chatroom.messages.length === 0)
+      return res.status(200).json(chatroom.messages);
+
     const allMessages = chatroom.messages.slice(
       chat.messages.length - (page + 1) * 10,
       chat.messages.length - page * 10
