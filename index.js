@@ -10,6 +10,7 @@ const passport = require("passport");
 const join = require("./socket/join");
 const sendMessage = require("./socket/sendMessage");
 const path = require("path");
+const ErrorHandler = require("./utils/HandleErrors");
 dotenv.config({ path: "./.env" });
 require("./config/passport")(passport);
 
@@ -44,6 +45,9 @@ io.on("connection", (socket) => {
     });
   });
 });
+
+app.use(ErrorHandler.notFound);
+app.use(ErrorHandler.handleError);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));

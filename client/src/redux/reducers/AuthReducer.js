@@ -12,6 +12,7 @@ import {
 const initalState = {
   token: localStorage.getItem("Authorization"),
   isAuthenticated: null,
+  isRegistredSuccessfully: null,
   isLoading: false,
   user: null,
 };
@@ -35,6 +36,7 @@ export default (state = initalState, action) => {
       return {
         ...state,
         isLoading: false,
+        isRegistredSuccessfully: true,
       };
     }
     case LOGIN_SUCCESS:
@@ -43,6 +45,7 @@ export default (state = initalState, action) => {
         ...state,
         user: action.payload.data,
         token: action.payload.data.token,
+        isRegistredSuccessfully: null,
         isAuthenticated: true,
         isLoading: false,
       };
@@ -57,6 +60,7 @@ export default (state = initalState, action) => {
         user: null,
         isAuthenticated: false,
         isLoading: false,
+        isRegistredSuccessfully: null,
       };
     }
     default:

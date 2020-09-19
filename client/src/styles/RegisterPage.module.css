@@ -92,7 +92,7 @@ img {
   color: rgba(255, 255, 255, 0.37);
 }
 .registerButton {
-  margin-top: 3rem;
+  margin-top: 1.2rem;
   width: 80%;
   align-self: center;
   color: white;
@@ -133,7 +133,7 @@ img {
   outline: none;
 }
 .error {
-  margin-top: 0.6rem;
+  margin-top: 0.2rem;
   text-align: center;
   color: red;
 }

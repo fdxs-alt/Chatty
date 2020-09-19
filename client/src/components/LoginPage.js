@@ -4,24 +4,23 @@ import loginImage from "../images/3911045.jpg";
 import { Link, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { loginUser } from "../redux/actions/AuthActions";
-import {clearErrors} from '../redux/actions/ErrorActions'
+import { clearErrors } from "../redux/actions/ErrorActions";
 const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  useEffect(() => {
-    clearErrors();
-  }, [clearErrors]);
-  const handleSubmit = e => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
       email,
-      password
+      password,
     };
     loginUser(user);
     setEmail("");
     setPassword("");
-    clearErrors()
+    clearErrors();
   };
+
   if (auth.isAuthenticated) return <Redirect to="/dashboard" />;
   else
     return (
@@ -41,7 +40,7 @@ const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
               value={email}
               type="email"
               placeholder="Your email"
-              onChange={e => {
+              onChange={(e) => {
                 setEmail(e.target.value);
               }}
             />
@@ -50,7 +49,7 @@ const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
               value={password}
               type="password"
               placeholder="Your password"
-              onChange={e => {
+              onChange={(e) => {
                 setPassword(e.target.value);
               }}
             />
@@ -59,7 +58,7 @@ const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
             )}
             <button
               onClick={handleSubmit}
-              onKeyPress={e => {
+              onKeyPress={(e) => {
                 if (e.key === "Enter") handleSubmit(e);
               }}
               className={styles.loginButton}
@@ -67,7 +66,9 @@ const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
               Login
             </button>
           </form>
-          <Link className={styles.registerLink} to="/resetByEmail">Forgotten password?</Link>
+          <Link className={styles.registerLink} to="/resetByEmail">
+            Forgotten password?
+          </Link>
           <Link className={styles.registerLink} to="/register">
             Don't have an account, register now!
           </Link>
@@ -79,8 +80,8 @@ const LoginPage = ({ auth, loginUser, error, clearErrors }) => {
       </div>
     );
 };
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   auth: state.auth,
-  error: state.error
+  error: state.error,
 });
 export default connect(mapStateToProps, { loginUser, clearErrors })(LoginPage);

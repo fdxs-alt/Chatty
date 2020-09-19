@@ -5,8 +5,7 @@ import styles from "../styles/RegisterPage.module.css";
 import { connect } from "react-redux";
 import { registerUser } from "../redux/actions/AuthActions";
 import { clearErrors } from "../redux/actions/ErrorActions";
-
-const RegistePage = ({ registerUser, error, clearErrors }) => {
+const RegistePage = ({ registerUser, error, clearErrors, auth }) => {
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
@@ -15,17 +14,20 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
   }, [clearErrors]);
   const handleSubmit = (e) => {
     e.preventDefault();
+    clearErrors();
     const newUser = {
       email,
       password,
       nick,
     };
     registerUser(newUser);
-    setEmail("");
-    setNick("");
-    setPassword("");
-    clearErrors();
+    if (!error.message) {
+      setEmail("");
+      setNick("");
+      setPassword("");
+    }
   };
+
   return (
     <div className={styles.container}>
       <div className={styles.welcome}>
@@ -56,9 +58,26 @@ const RegistePage = ({ registerUser, error, clearErrors }) => {
           {error.message && (
             <h2 className={styles.error}>{error.message.error}</h2>
           )}
-          <button className={styles.registerButton} onClick={handleSubmit}>
+
+          <button
+            className={styles.registerButton}
+            onClick={handleSubmit}
+            disabled={auth.isLoading}
+          >
             Register
           </button>
+
+          {auth.isRegistredSuccessfully && (
+            <h4
+              style={{
+                color: "rgb(36, 170, 36)",
+                textAlign: "center",
+                padding: "1rem",
+              }}
+            >
+              User registered successfully
+            </h4>
+          )}
         </form>
         <Link className={styles.loginLink} to="/">
           Already have account, log in

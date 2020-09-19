@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import { logout, getUser } from "../redux/actions/AuthActions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCogs } from "@fortawesome/free-solid-svg-icons";
-const Options = ({ auth, logout, getUser }) => {
+const Options = ({ auth, logout }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [nickname, setNickname] = useState("");
