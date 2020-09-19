@@ -4,38 +4,41 @@ const { sendEmail } = require("../utils/confirmMail");
 const emailValidator = require("email-validator");
 const bcrypt = require("bcryptjs");
 const { resetPassword } = require("../utils/resetPassword");
+const User = require("../models/ChatRoom");
 
 const register = async (req, res, next) => {
-  const { email, nick, password } = req.body;
-
-  if (!email || !nick || !password) {
-    return next(new HttpException(400, "Fill all gaps"));
-  }
-
-  if (password.length < 6) {
-    return next(
-      new HttpException(400, "Password must be at least 6 characters")
-    );
-  }
-
-  if (nick.length < 4) {
-    return next(new HttpException(400, "Nick must be at least 4 characters"));
-  }
-
-  if (nick.length > 10)
-    return next(
-      new HttpException(400, "Nick can't be longer than 10 characters")
-    );
-
-  if (!emailValidator.validate(email))
-    return next(new HttpException(400, "Email adress doesn't exist"));
-
   try {
-    const userWithNick = await User.findOne({ nick });
+    const { email, nick, password } = req.body;
 
+    if (!email || !nick || !password) {
+      return next(new HttpException(400, "Fill all gaps"));
+    }
+
+    if (password.length < 6) {
+      return next(
+        new HttpException(400, "Password must be at least 6 characters")
+      );
+    }
+
+    if (nick.length < 4) {
+      return next(new HttpException(400, "Nick must be at least 4 characters"));
+    }
+
+    if (nick.length > 10)
+      return next(
+        new HttpException(400, "Nick can't be longer than 10 characters")
+      );
+
+    if (!emailValidator.validate(email)) {
+      return next(new HttpException(400, "Email adress doesn't exist"));
+    }
+
+    const userWithNick = await User.findOne({ nick });
+    console.log(userWithNick);
     if (userWithNick) {
       return next(new HttpException(400, "Nick is already taken"));
     }
+
     const userWithEmail = await User.findOne({ email });
 
     if (userWithEmail) {
@@ -58,7 +61,7 @@ const register = async (req, res, next) => {
       .status(200)
       .json({ message: "User's been registered sucessfully" });
   } catch (error) {
-    return next(new HttpException(500, "An error occured"));
+    return next(new HttpException(500, "Error occured"));
   }
 };
 
@@ -92,6 +95,7 @@ const login = async (req, res, next) => {
   if (!email || !password) {
     return next(new HttpException(400, "Fill all cridentials"));
   }
+
   try {
     const user = await User.findOne({ email });
 
@@ -109,7 +113,7 @@ const login = async (req, res, next) => {
       .status(200)
       .json({ message: "You're logged in", data: user.toAuthJwt() });
   } catch (error) {
-    return next(new HttpException(500, "An error occured"));
+    return next(new HttpException(500, error));
   }
 };
 const recoverPassword = async (req, res, next) => {

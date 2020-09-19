@@ -1,6 +1,7 @@
 const ChatRoom = require("../models/ChatRoom");
 const HttpException = require("../utils/HttpException");
 const jwt = require("jsonwebtoken");
+const User = require("../models/User");
 
 const getAllChatrooms = async (req, res, next) => {
   try {
@@ -154,7 +155,9 @@ const chageNick = async (req, res, next) => {
     }
     await User.findByIdAndUpdate(userID, { nick });
 
-    return res.status(201).json({ message: "You've changed your nick successfully" });
+    return res
+      .status(201)
+      .json({ message: "You've changed your nick successfully" });
   } catch (error) {
     return next(new HttpException(500, "An error occured"));
   }
