@@ -1,6 +1,7 @@
 ## Chatty
 
 #### App build with Node/Express on backend and React + Redux on frontend
+##### Log in with those credentials email: sws86208@eoopy.com, password: sws86208@eoopy.com (due to issues with gmail not sending emails) 
 ---
 ##### Backend: 
 1. Express
