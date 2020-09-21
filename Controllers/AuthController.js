@@ -103,12 +103,6 @@ const login = async (req, res, next) => {
       return next(new HttpException(400, "Password or email doesn't match"));
     }
 
-    if (!user.confirmed) {
-      return next(
-        new HttpException(400, "You need to confirm you account first")
-      );
-    }
-
     const isMatch = await user.validatePassword(password);
 
     if (!isMatch) {
